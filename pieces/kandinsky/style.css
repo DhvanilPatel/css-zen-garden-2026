@@ -1,0 +1,316 @@
+/* Kandinsky - Abstract circles and lines inspired by Composition VIII */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cream: #f4efe4;
+    --black: #1a1a1a;
+    --blue-dark: #1e3a5f;
+    --blue-light: #6ba3d6;
+    --yellow: #e8c547;
+    --red: #c23b22;
+    --purple: #6b4c7a;
+    --orange: #e07b39;
+    --green: #4a7c59;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--cream);
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.composition {
+    position: relative;
+    width: min(90vw, 800px);
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--cream) 0%, #e8e3d8 100%);
+    overflow: hidden;
+}
+
+/* Circles */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.circle-1 {
+    width: 25%;
+    height: 25%;
+    top: 10%;
+    left: 15%;
+    background: var(--blue-dark);
+    box-shadow: inset -10px -10px 30px rgba(0,0,0,0.3);
+}
+
+.circle-2 {
+    width: 8%;
+    height: 8%;
+    top: 15%;
+    left: 35%;
+    background: var(--red);
+}
+
+.circle-3 {
+    width: 15%;
+    height: 15%;
+    top: 5%;
+    right: 20%;
+    border: 3px solid var(--black);
+    background: transparent;
+}
+
+.circle-4 {
+    width: 20%;
+    height: 20%;
+    bottom: 25%;
+    left: 10%;
+    background: radial-gradient(circle at 30% 30%, var(--yellow) 0%, var(--orange) 100%);
+}
+
+.circle-5 {
+    width: 12%;
+    height: 12%;
+    bottom: 15%;
+    right: 25%;
+    background: var(--purple);
+    opacity: 0.8;
+}
+
+.circle-6 {
+    width: 6%;
+    height: 6%;
+    top: 40%;
+    left: 45%;
+    background: var(--black);
+}
+
+.circle-7 {
+    width: 30%;
+    height: 30%;
+    bottom: 5%;
+    right: 5%;
+    border: 2px solid var(--blue-light);
+    background: transparent;
+    opacity: 0.6;
+}
+
+/* Lines */
+.line {
+    position: absolute;
+    background: var(--black);
+}
+
+.line-1 {
+    width: 60%;
+    height: 2px;
+    top: 35%;
+    left: 20%;
+    transform: rotate(-15deg);
+}
+
+.line-2 {
+    width: 2px;
+    height: 40%;
+    top: 30%;
+    left: 40%;
+    transform: rotate(10deg);
+}
+
+.line-3 {
+    width: 45%;
+    height: 3px;
+    bottom: 40%;
+    right: 10%;
+    transform: rotate(25deg);
+    background: var(--red);
+}
+
+.line-4 {
+    width: 30%;
+    height: 1px;
+    top: 60%;
+    left: 5%;
+    transform: rotate(-5deg);
+}
+
+/* Triangles */
+.triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.triangle-1 {
+    top: 50%;
+    right: 15%;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 70px solid var(--blue-light);
+    opacity: 0.7;
+}
+
+.triangle-2 {
+    bottom: 30%;
+    left: 35%;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 45px solid var(--green);
+    transform: rotate(30deg);
+}
+
+/* Arcs */
+.arc {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.arc-1 {
+    width: 20%;
+    height: 20%;
+    top: 25%;
+    right: 30%;
+    border-top-color: var(--black);
+    border-right-color: var(--black);
+    transform: rotate(45deg);
+}
+
+.arc-2 {
+    width: 15%;
+    height: 15%;
+    bottom: 45%;
+    left: 25%;
+    border-bottom-color: var(--purple);
+    border-left-color: var(--purple);
+    transform: rotate(-30deg);
+}
+
+/* Checkerboard pattern */
+.checker {
+    position: absolute;
+    top: 55%;
+    left: 55%;
+    width: 15%;
+    height: 15%;
+    background:
+        repeating-conic-gradient(
+            var(--black) 0deg 90deg,
+            var(--cream) 90deg 180deg
+        );
+    background-size: 25% 25%;
+    transform: rotate(15deg);
+    opacity: 0.8;
+}
+
+/* Text elements */
+.text-block {
+    position: absolute;
+    color: var(--black);
+}
+
+.text-1 {
+    top: 8%;
+    right: 5%;
+    text-align: right;
+}
+
+.text-1 h1 {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.text-1 span {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+}
+
+.text-2 {
+    bottom: 8%;
+    left: 5%;
+}
+
+.text-2 p {
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    font-style: italic;
+    letter-spacing: 0.1em;
+}
+
+.text-3 {
+    top: 70%;
+    right: 35%;
+    max-width: 25%;
+}
+
+.quote {
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    line-height: 1.6;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--black);
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    font-family: 'Georgia', serif;
+}
+
+/* Subtle floating animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .circle-2 {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .circle-6 {
+        animation: float 3s ease-in-out infinite 0.5s;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .canvas {
+        padding: 1rem;
+    }
+
+    .triangle-1 {
+        border-left-width: 25px;
+        border-right-width: 25px;
+        border-bottom-width: 45px;
+    }
+
+    .triangle-2 {
+        border-left-width: 15px;
+        border-right-width: 15px;
+        border-bottom-width: 28px;
+    }
+
+    .text-3 {
+        display: none;
+    }
+}
