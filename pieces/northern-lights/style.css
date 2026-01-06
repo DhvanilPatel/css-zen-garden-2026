@@ -1,0 +1,638 @@
+/* Northern Lights - Pure CSS Art */
+/* Showcases: CSS animations, gradients, filters, pseudo-elements, clip-path */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --aurora-green: #00ff87;
+    --aurora-teal: #00d4aa;
+    --aurora-blue: #0077ff;
+    --aurora-purple: #9d00ff;
+    --aurora-pink: #ff00aa;
+    --sky-dark: #0a0a1a;
+    --sky-mid: #1a1a3a;
+    --mountain-dark: #0d0d15;
+    --forest-dark: #050508;
+    --lake-color: #080812;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--sky-dark);
+    color: #e0e8f0;
+    line-height: 1.7;
+}
+
+/* Main Scene Container */
+.scene {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        var(--sky-dark) 0%,
+        var(--sky-mid) 40%,
+        #1a2a3a 60%,
+        var(--sky-dark) 100%
+    );
+    overflow: hidden;
+}
+
+/* ============================================
+   AURORA BOREALIS
+   ============================================ */
+.aurora {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+    filter: blur(3px);
+    opacity: 0.8;
+}
+
+.aurora-layer {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    left: -50%;
+    background: transparent;
+}
+
+/* Aurora Layer 1 - Main green curtain */
+.aurora-1 {
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 255, 135, 0.1) 20%,
+        rgba(0, 255, 135, 0.4) 35%,
+        rgba(0, 212, 170, 0.3) 45%,
+        rgba(0, 119, 255, 0.2) 55%,
+        transparent 70%
+    );
+    animation: aurora-wave 8s ease-in-out infinite;
+    transform-origin: center top;
+}
+
+/* Aurora Layer 2 - Secondary wave */
+.aurora-2 {
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(157, 0, 255, 0.1) 25%,
+        rgba(0, 255, 135, 0.3) 40%,
+        rgba(0, 212, 170, 0.2) 50%,
+        transparent 65%
+    );
+    animation: aurora-wave 12s ease-in-out infinite reverse;
+    animation-delay: -3s;
+}
+
+/* Aurora Layer 3 - Accent purple */
+.aurora-3 {
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 0, 170, 0.05) 15%,
+        rgba(157, 0, 255, 0.2) 30%,
+        rgba(0, 119, 255, 0.15) 45%,
+        transparent 60%
+    );
+    animation: aurora-wave 15s ease-in-out infinite;
+    animation-delay: -7s;
+}
+
+/* Aurora Layer 4 - Shimmer */
+.aurora-4 {
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        rgba(0, 255, 135, 0.1) 2px,
+        transparent 4px,
+        rgba(0, 212, 170, 0.05) 8px,
+        transparent 12px
+    );
+    animation: aurora-shimmer 4s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes aurora-wave {
+    0%, 100% {
+        transform: translateX(-5%) scaleY(1) skewX(-5deg);
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        transform: translateX(3%) scaleY(1.1) skewX(3deg);
+        filter: hue-rotate(15deg);
+    }
+    50% {
+        transform: translateX(5%) scaleY(0.9) skewX(5deg);
+        filter: hue-rotate(-10deg);
+    }
+    75% {
+        transform: translateX(-3%) scaleY(1.05) skewX(-3deg);
+        filter: hue-rotate(5deg);
+    }
+}
+
+@keyframes aurora-shimmer {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50px);
+    }
+}
+
+/* ============================================
+   STARS
+   ============================================ */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.star::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Star positions */
+.star:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; }
+.star:nth-child(2) { top: 12%; left: 25%; animation-delay: 0.5s; width: 3px; height: 3px; }
+.star:nth-child(3) { top: 8%; left: 45%; animation-delay: 1s; }
+.star:nth-child(4) { top: 15%; left: 60%; animation-delay: 1.5s; }
+.star:nth-child(5) { top: 3%; left: 75%; animation-delay: 2s; width: 3px; height: 3px; }
+.star:nth-child(6) { top: 18%; left: 85%; animation-delay: 0.3s; }
+.star:nth-child(7) { top: 25%; left: 15%; animation-delay: 0.8s; }
+.star:nth-child(8) { top: 20%; left: 35%; animation-delay: 1.3s; width: 1px; height: 1px; }
+.star:nth-child(9) { top: 28%; left: 55%; animation-delay: 1.8s; }
+.star:nth-child(10) { top: 22%; left: 70%; animation-delay: 2.3s; width: 3px; height: 3px; }
+.star:nth-child(11) { top: 10%; left: 92%; animation-delay: 0.2s; }
+.star:nth-child(12) { top: 32%; left: 8%; animation-delay: 0.7s; }
+.star:nth-child(13) { top: 35%; left: 28%; animation-delay: 1.2s; width: 1px; height: 1px; }
+.star:nth-child(14) { top: 30%; left: 48%; animation-delay: 1.7s; }
+.star:nth-child(15) { top: 38%; left: 65%; animation-delay: 2.2s; }
+.star:nth-child(16) { top: 6%; left: 58%; animation-delay: 0.4s; width: 1px; height: 1px; }
+.star:nth-child(17) { top: 14%; left: 5%; animation-delay: 0.9s; }
+.star:nth-child(18) { top: 40%; left: 80%; animation-delay: 1.4s; }
+.star:nth-child(19) { top: 2%; left: 38%; animation-delay: 1.9s; width: 3px; height: 3px; }
+.star:nth-child(20) { top: 33%; left: 95%; animation-delay: 2.4s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============================================
+   MOUNTAINS
+   ============================================ */
+.mountains {
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    pointer-events: none;
+}
+
+.mountain {
+    position: absolute;
+    bottom: 0;
+    background: var(--mountain-dark);
+}
+
+.mountain-1 {
+    left: -10%;
+    width: 50%;
+    height: 100%;
+    clip-path: polygon(0% 100%, 50% 10%, 100% 100%);
+}
+
+.mountain-2 {
+    left: 30%;
+    width: 45%;
+    height: 85%;
+    clip-path: polygon(0% 100%, 45% 5%, 100% 100%);
+    background: #0f0f1a;
+}
+
+.mountain-3 {
+    left: 60%;
+    width: 55%;
+    height: 95%;
+    clip-path: polygon(0% 100%, 55% 15%, 100% 100%);
+}
+
+/* Snow caps */
+.mountain-1::before,
+.mountain-2::before,
+.mountain-3::before {
+    content: '';
+    position: absolute;
+    background: rgba(200, 220, 255, 0.15);
+}
+
+.mountain-1::before {
+    top: 10%;
+    left: 45%;
+    width: 10%;
+    height: 15%;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+.mountain-2::before {
+    top: 5%;
+    left: 40%;
+    width: 12%;
+    height: 18%;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+.mountain-3::before {
+    top: 15%;
+    left: 50%;
+    width: 10%;
+    height: 12%;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+/* ============================================
+   FOREST
+   ============================================ */
+.forest {
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.tree {
+    width: 3%;
+    min-width: 15px;
+    background: var(--forest-dark);
+    position: relative;
+}
+
+.tree::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 1.5vw solid transparent;
+    border-right: 1.5vw solid transparent;
+    border-bottom: 4vw solid var(--forest-dark);
+}
+
+.tree::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2vw);
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 1.2vw solid transparent;
+    border-right: 1.2vw solid transparent;
+    border-bottom: 3vw solid var(--forest-dark);
+}
+
+/* Tree variations */
+.tree:nth-child(1) { height: 5%; }
+.tree:nth-child(2) { height: 8%; }
+.tree:nth-child(3) { height: 6%; }
+.tree:nth-child(4) { height: 10%; }
+.tree:nth-child(5) { height: 7%; }
+.tree:nth-child(6) { height: 12%; }
+.tree:nth-child(7) { height: 9%; }
+.tree:nth-child(8) { height: 6%; }
+.tree:nth-child(9) { height: 11%; }
+.tree:nth-child(10) { height: 7%; }
+.tree:nth-child(11) { height: 8%; }
+.tree:nth-child(12) { height: 5%; }
+
+/* ============================================
+   LAKE REFLECTION
+   ============================================ */
+.lake {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(
+        to bottom,
+        var(--lake-color) 0%,
+        #0a0a15 100%
+    );
+    overflow: hidden;
+}
+
+.reflection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 255, 135, 0.1) 0%,
+        rgba(0, 212, 170, 0.05) 30%,
+        rgba(157, 0, 255, 0.03) 60%,
+        transparent 100%
+    );
+    animation: reflection-wave 6s ease-in-out infinite;
+    filter: blur(8px);
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: ripple-expand 8s linear infinite;
+}
+
+.ripple:nth-child(2) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.ripple:nth-child(3) {
+    bottom: 50%;
+    left: 60%;
+    animation-delay: 3s;
+}
+
+.ripple:nth-child(4) {
+    bottom: 20%;
+    left: 80%;
+    animation-delay: 5s;
+}
+
+@keyframes reflection-wave {
+    0%, 100% {
+        transform: scaleY(1) translateY(0);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scaleY(1.1) translateY(-5px);
+        opacity: 0.8;
+    }
+}
+
+@keyframes ripple-expand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 200px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   CONTENT
+   ============================================ */
+.content {
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 8vh 5vw 10vh;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 6vh;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(
+        135deg,
+        var(--aurora-green) 0%,
+        var(--aurora-teal) 25%,
+        var(--aurora-blue) 50%,
+        var(--aurora-purple) 75%,
+        var(--aurora-pink) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: title-glow 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 135, 0.3));
+}
+
+@keyframes title-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 30px rgba(0, 255, 135, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 50px rgba(157, 0, 255, 0.4));
+    }
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-style: italic;
+    color: rgba(200, 220, 255, 0.7);
+    margin-top: 1rem;
+    letter-spacing: 0.3em;
+}
+
+.story {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+}
+
+.story p {
+    margin-bottom: 2rem;
+    color: rgba(224, 232, 240, 0.9);
+}
+
+.story em {
+    color: var(--aurora-green);
+    font-style: italic;
+}
+
+blockquote {
+    margin: 3rem 0;
+    padding: 2rem;
+    border-left: 3px solid var(--aurora-teal);
+    background: rgba(0, 212, 170, 0.05);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    position: relative;
+}
+
+blockquote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 5rem;
+    color: rgba(0, 255, 135, 0.2);
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(157, 0, 255, 0.8);
+    font-style: normal;
+}
+
+.credits {
+    text-align: center;
+    margin-top: 6vh;
+    padding-top: 3vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    color: rgba(200, 220, 255, 0.5);
+    letter-spacing: 0.2em;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .aurora {
+        filter: blur(5px);
+    }
+
+    .mountains {
+        bottom: 20%;
+        height: 25%;
+    }
+
+    .forest {
+        bottom: 15%;
+        height: 12%;
+    }
+
+    .lake {
+        height: 15%;
+    }
+
+    .tree::before {
+        border-left-width: 3vw;
+        border-right-width: 3vw;
+        border-bottom-width: 8vw;
+    }
+
+    .tree::after {
+        border-left-width: 2.5vw;
+        border-right-width: 2.5vw;
+        border-bottom-width: 6vw;
+    }
+
+    .content {
+        padding: 5vh 6vw 8vh;
+    }
+
+    blockquote {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    blockquote::before {
+        font-size: 3rem;
+        top: -10px;
+        left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .star {
+        width: 1px;
+        height: 1px;
+    }
+
+    .star:nth-child(2),
+    .star:nth-child(5),
+    .star:nth-child(10),
+    .star:nth-child(19) {
+        width: 2px;
+        height: 2px;
+    }
+
+    .forest {
+        gap: 0;
+    }
+
+    .tree {
+        min-width: 10px;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .aurora-layer,
+    .star,
+    .reflection,
+    .ripple,
+    h1 {
+        animation: none;
+    }
+
+    .aurora {
+        opacity: 0.6;
+    }
+
+    .star {
+        opacity: 0.7;
+    }
+}
+
+/* Dark mode enhancement (already dark, but adds extra depth) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sky-dark: #050510;
+        --sky-mid: #101025;
+    }
+}

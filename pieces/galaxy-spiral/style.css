@@ -1,0 +1,376 @@
+/* Galaxy Spiral - Rotating spiral galaxy */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at center, #0a0a1a 0%, #050510 100%);
+    color: #e0e0f0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Universe container */
+.universe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Distant background stars */
+.distant-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 18% 28%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 28% 8%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 42% 35%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 55% 18%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 68% 42%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 82% 25%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 92% 55%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 58% 72%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 88% 68%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 5% 88%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 48% 92%, rgba(255,255,255,0.4), transparent);
+    background-size: 300px 300px;
+}
+
+/* Galaxy container */
+.galaxy {
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    transform: translate(0, -50%) rotateX(60deg);
+    width: clamp(280px, 45vw, 500px);
+    height: clamp(280px, 45vw, 500px);
+    transform-style: preserve-3d;
+    animation: galaxy-rotate 120s linear infinite;
+}
+
+@keyframes galaxy-rotate {
+    from { transform: translate(0, -50%) rotateX(60deg) rotateZ(0deg); }
+    to { transform: translate(0, -50%) rotateX(60deg) rotateZ(360deg); }
+}
+
+/* Galactic core */
+.core {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    top: 40%;
+    left: 40%;
+    z-index: 10;
+}
+
+.core-glow {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 240, 200, 0.8) 0%,
+        rgba(255, 220, 150, 0.4) 30%,
+        rgba(255, 180, 100, 0.2) 50%,
+        transparent 70%
+    );
+    filter: blur(5px);
+}
+
+.core-center {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle,
+        #fffef0 0%,
+        #fff5d0 40%,
+        #ffe8a0 70%,
+        #ffd070 100%
+    );
+    border-radius: 50%;
+    box-shadow:
+        0 0 30px rgba(255, 240, 180, 0.8),
+        0 0 60px rgba(255, 200, 100, 0.5),
+        0 0 100px rgba(255, 180, 80, 0.3);
+}
+
+/* Spiral arms */
+.arm {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.arm::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        from var(--start-angle, 0deg),
+        transparent 0deg,
+        rgba(180, 200, 255, 0.15) 15deg,
+        rgba(200, 180, 255, 0.25) 40deg,
+        rgba(180, 200, 255, 0.15) 65deg,
+        transparent 90deg,
+        transparent 360deg
+    );
+    border-radius: 50%;
+    filter: blur(3px);
+}
+
+.arm-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 15% 48%, rgba(255, 220, 180, 0.8), transparent),
+        radial-gradient(1.5px 1.5px at 20% 44%, rgba(200, 220, 255, 0.7), transparent),
+        radial-gradient(2px 2px at 28% 40%, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1.5px 1.5px at 35% 38%, rgba(255, 200, 150, 0.6), transparent),
+        radial-gradient(2.5px 2.5px at 42% 42%, rgba(255, 255, 200, 0.8), transparent),
+        radial-gradient(1px 1px at 25% 52%, rgba(200, 200, 255, 0.5), transparent),
+        radial-gradient(1.5px 1.5px at 32% 55%, rgba(255, 220, 200, 0.6), transparent);
+    border-radius: 50%;
+}
+
+.arm-1 { --start-angle: 0deg; }
+.arm-2 { --start-angle: 90deg; transform: rotate(90deg); }
+.arm-3 { --start-angle: 180deg; transform: rotate(180deg); }
+.arm-4 { --start-angle: 270deg; transform: rotate(270deg); }
+
+/* Dust lanes */
+.dust-lane {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.dust-1::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        from 30deg,
+        transparent 0deg,
+        rgba(50, 30, 20, 0.3) 20deg,
+        rgba(30, 20, 15, 0.4) 40deg,
+        transparent 60deg,
+        transparent 360deg
+    );
+    border-radius: 50%;
+    filter: blur(5px);
+}
+
+.dust-2::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        from 210deg,
+        transparent 0deg,
+        rgba(40, 25, 20, 0.35) 25deg,
+        rgba(30, 20, 15, 0.4) 45deg,
+        transparent 65deg,
+        transparent 360deg
+    );
+    border-radius: 50%;
+    filter: blur(5px);
+}
+
+/* Galactic halo */
+.halo {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    background: radial-gradient(
+        circle,
+        transparent 30%,
+        rgba(100, 120, 180, 0.03) 50%,
+        rgba(80, 100, 160, 0.05) 70%,
+        transparent 90%
+    );
+    border-radius: 50%;
+}
+
+/* You are here marker */
+.you-are-here {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: calc(50% + 60px);
+    right: calc(15% + 80px);
+    background: #4fc3f7;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #4fc3f7, 0 0 20px rgba(79, 195, 247, 0.5);
+    animation: pulse-marker 2s ease-in-out infinite;
+    z-index: 20;
+}
+
+.you-are-here::after {
+    content: 'You are here';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.7rem;
+    color: #4fc3f7;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+@keyframes pulse-marker {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Content */
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin-left: 5%;
+    padding: 3rem 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 300;
+    background: linear-gradient(135deg, #fff, #ffd070, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #a0a0c0;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.data-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.panel {
+    background: rgba(15, 15, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(180, 200, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.panel:hover {
+    border-color: rgba(180, 200, 255, 0.3);
+    transform: translateX(5px);
+}
+
+.panel.highlight {
+    border-color: rgba(255, 200, 100, 0.3);
+    background: linear-gradient(135deg, rgba(15, 15, 30, 0.8), rgba(30, 25, 20, 0.8));
+}
+
+h2 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #b0c0ff;
+    margin-bottom: 0.75rem;
+}
+
+.panel.highlight h2 {
+    color: #ffd070;
+}
+
+.panel p {
+    line-height: 1.7;
+    font-size: 0.9rem;
+    color: #b0b0c0;
+}
+
+footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+footer p {
+    color: #606080;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .galaxy {
+        position: relative;
+        top: auto;
+        right: auto;
+        transform: rotateX(60deg);
+        margin: 2rem auto;
+        width: clamp(200px, 70vw, 300px);
+        height: clamp(200px, 70vw, 300px);
+    }
+
+    .you-are-here {
+        top: calc(50% + 40px);
+        right: calc(50% - 60px);
+    }
+
+    .content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 90%;
+        padding-top: 1rem;
+    }
+
+    @keyframes galaxy-rotate {
+        from { transform: rotateX(60deg) rotateZ(0deg); }
+        to { transform: rotateX(60deg) rotateZ(360deg); }
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .galaxy,
+    .you-are-here {
+        animation: none;
+    }
+}

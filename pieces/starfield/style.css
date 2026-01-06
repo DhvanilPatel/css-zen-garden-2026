@@ -1,0 +1,270 @@
+/* Starfield - Infinite star parallax with nebula colors */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #0a0a1a;
+    color: #e0e0ff;
+    font-family: 'Georgia', serif;
+    overflow-x: hidden;
+}
+
+/* Universe container */
+.universe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Nebula gradient background */
+.nebula {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(139, 69, 182, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(70, 130, 180, 0.25) 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 70%, rgba(219, 112, 147, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(100, 149, 237, 0.25) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 60%, rgba(186, 85, 211, 0.2) 0%, transparent 45%);
+    animation: nebula-drift 120s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-drift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-10%, -5%) rotate(3deg); }
+}
+
+/* Star layers with parallax effect */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    top: 0;
+    left: 0;
+}
+
+.stars-small {
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, white, transparent),
+        radial-gradient(1px 1px at 25% 35%, white, transparent),
+        radial-gradient(1px 1px at 40% 10%, white, transparent),
+        radial-gradient(1px 1px at 55% 45%, white, transparent),
+        radial-gradient(1px 1px at 70% 25%, white, transparent),
+        radial-gradient(1px 1px at 85% 55%, white, transparent),
+        radial-gradient(1px 1px at 15% 65%, white, transparent),
+        radial-gradient(1px 1px at 35% 80%, white, transparent),
+        radial-gradient(1px 1px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 80% 85%, white, transparent),
+        radial-gradient(1px 1px at 95% 40%, white, transparent),
+        radial-gradient(1px 1px at 5% 90%, white, transparent),
+        radial-gradient(1px 1px at 45% 95%, white, transparent),
+        radial-gradient(1px 1px at 20% 50%, white, transparent),
+        radial-gradient(1px 1px at 75% 15%, white, transparent);
+    background-size: 250px 250px;
+    opacity: 0.6;
+    animation: parallax-slow 200s linear infinite;
+}
+
+.stars-medium {
+    background-image:
+        radial-gradient(1.5px 1.5px at 12% 18%, #ffe4c4, transparent),
+        radial-gradient(1.5px 1.5px at 28% 42%, #b0c4de, transparent),
+        radial-gradient(1.5px 1.5px at 45% 28%, white, transparent),
+        radial-gradient(1.5px 1.5px at 62% 55%, #ffe4c4, transparent),
+        radial-gradient(1.5px 1.5px at 78% 35%, #add8e6, transparent),
+        radial-gradient(1.5px 1.5px at 88% 68%, white, transparent),
+        radial-gradient(1.5px 1.5px at 18% 78%, #ffd700, transparent),
+        radial-gradient(1.5px 1.5px at 52% 88%, white, transparent),
+        radial-gradient(1.5px 1.5px at 72% 12%, #b0c4de, transparent),
+        radial-gradient(1.5px 1.5px at 38% 62%, #ffe4c4, transparent);
+    background-size: 350px 350px;
+    opacity: 0.8;
+    animation: parallax-medium 150s linear infinite;
+}
+
+.stars-large {
+    background-image:
+        radial-gradient(2.5px 2.5px at 15% 25%, white, transparent),
+        radial-gradient(2px 2px at 35% 55%, #ffefd5, transparent),
+        radial-gradient(2.5px 2.5px at 55% 15%, #b0e0e6, transparent),
+        radial-gradient(2px 2px at 75% 45%, white, transparent),
+        radial-gradient(3px 3px at 25% 75%, #fff8dc, transparent),
+        radial-gradient(2.5px 2.5px at 65% 85%, #e6e6fa, transparent),
+        radial-gradient(2px 2px at 85% 25%, white, transparent),
+        radial-gradient(2.5px 2.5px at 45% 35%, #fffaf0, transparent);
+    background-size: 500px 500px;
+    animation: parallax-fast 100s linear infinite, twinkle 4s ease-in-out infinite;
+}
+
+@keyframes parallax-slow {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+@keyframes parallax-medium {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+@keyframes parallax-fast {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Shooting stars */
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    top: 20%;
+    left: -100px;
+    transform: rotate(-35deg);
+    animation: shoot 8s ease-in infinite;
+    opacity: 0;
+}
+
+.shooting-star.delay-1 {
+    top: 40%;
+    animation-delay: 3s;
+}
+
+.shooting-star.delay-2 {
+    top: 60%;
+    animation-delay: 6s;
+}
+
+@keyframes shoot {
+    0% {
+        left: -100px;
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    20% {
+        left: 120%;
+        opacity: 0;
+    }
+    100% {
+        left: 120%;
+        opacity: 0;
+    }
+}
+
+/* Content styling */
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #ffffff, #b0c4de, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 40px rgba(147, 112, 219, 0.5);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-style: italic;
+    color: #b0c4de;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+}
+
+article {
+    background: rgba(10, 10, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(147, 112, 219, 0.2);
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+article p {
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+article p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote {
+    border-left: 3px solid #9370db;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: #dda0dd;
+    font-size: 1.2rem;
+}
+
+footer {
+    text-align: center;
+    color: #6a5acd;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .content {
+        padding: 2rem 1rem;
+    }
+
+    article {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        letter-spacing: 0.15em;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .nebula,
+    .stars-small,
+    .stars-medium,
+    .stars-large,
+    .shooting-star {
+        animation: none;
+    }
+}

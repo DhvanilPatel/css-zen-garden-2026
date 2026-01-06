@@ -1,0 +1,749 @@
+/* Lightning Storm - CSS Zen Garden */
+/* Techniques: CSS animations, clip-path, gradients, pseudo-elements, filters */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --storm-dark: #0a0a12;
+    --storm-purple: #1a1a2e;
+    --cloud-dark: #2d2d44;
+    --cloud-light: #4a4a6a;
+    --lightning-core: #fff;
+    --lightning-glow: #b8d4ff;
+    --lightning-outer: #6b8cce;
+    --rain-color: rgba(174, 194, 224, 0.5);
+    --mountain-back: #15152a;
+    --mountain-mid: #1f1f3a;
+    --mountain-front: #2a2a4a;
+    --ground: #0d0d1a;
+    --tree-color: #0f0f20;
+    --text-light: #e8e8f0;
+    --text-muted: #a0a0b8;
+    --accent: #7b9fd4;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--storm-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.7;
+}
+
+.storm-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Sky Background */
+.sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        var(--storm-dark) 0%,
+        var(--storm-purple) 40%,
+        #252540 70%,
+        #1a1a30 100%
+    );
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Clouds */
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+.cloud {
+    position: absolute;
+    background: var(--cloud-dark);
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.8;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud-1 {
+    width: 400px;
+    height: 120px;
+    top: 5%;
+    left: 10%;
+    animation: cloud-drift 60s linear infinite;
+}
+
+.cloud-1::before {
+    width: 200px;
+    height: 150px;
+    top: -60px;
+    left: 50px;
+}
+
+.cloud-1::after {
+    width: 180px;
+    height: 130px;
+    top: -40px;
+    left: 180px;
+}
+
+.cloud-2 {
+    width: 500px;
+    height: 140px;
+    top: 8%;
+    left: 50%;
+    background: var(--cloud-light);
+    animation: cloud-drift 80s linear infinite reverse;
+}
+
+.cloud-2::before {
+    width: 250px;
+    height: 180px;
+    top: -80px;
+    left: 80px;
+}
+
+.cloud-2::after {
+    width: 200px;
+    height: 150px;
+    top: -50px;
+    left: 250px;
+}
+
+.cloud-3 {
+    width: 350px;
+    height: 100px;
+    top: 3%;
+    left: 70%;
+    animation: cloud-drift 70s linear infinite;
+}
+
+.cloud-3::before {
+    width: 180px;
+    height: 130px;
+    top: -50px;
+    left: 40px;
+}
+
+.cloud-4 {
+    width: 450px;
+    height: 130px;
+    top: 12%;
+    left: -5%;
+    animation: cloud-drift 90s linear infinite;
+}
+
+.cloud-4::before {
+    width: 220px;
+    height: 160px;
+    top: -70px;
+    left: 100px;
+}
+
+.cloud-4::after {
+    width: 190px;
+    height: 140px;
+    top: -40px;
+    left: 280px;
+}
+
+.cloud-5 {
+    width: 380px;
+    height: 110px;
+    top: 6%;
+    left: 30%;
+    background: var(--cloud-light);
+    opacity: 0.6;
+    animation: cloud-drift 55s linear infinite reverse;
+}
+
+.cloud-5::before {
+    width: 190px;
+    height: 140px;
+    top: -60px;
+    left: 60px;
+}
+
+@keyframes cloud-drift {
+    from {
+        transform: translateX(-100px);
+    }
+    to {
+        transform: translateX(100px);
+    }
+}
+
+/* Lightning Bolts */
+.lightning {
+    position: absolute;
+    top: 15%;
+    z-index: 10;
+    opacity: 0;
+}
+
+.lightning-1 {
+    left: 20%;
+    animation: lightning-flash 7s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.lightning-2 {
+    left: 65%;
+    animation: lightning-flash 8s ease-in-out infinite;
+    animation-delay: 3.5s;
+}
+
+.lightning-3 {
+    left: 45%;
+    animation: lightning-flash 9s ease-in-out infinite;
+    animation-delay: 6s;
+}
+
+.bolt {
+    width: 8px;
+    height: 200px;
+    background: var(--lightning-core);
+    position: relative;
+    clip-path: polygon(
+        50% 0%,
+        60% 25%,
+        80% 25%,
+        55% 45%,
+        75% 45%,
+        45% 70%,
+        65% 70%,
+        50% 100%,
+        40% 70%,
+        55% 70%,
+        30% 45%,
+        50% 45%,
+        25% 25%,
+        45% 25%
+    );
+    box-shadow:
+        0 0 10px var(--lightning-core),
+        0 0 20px var(--lightning-glow),
+        0 0 40px var(--lightning-glow),
+        0 0 80px var(--lightning-outer);
+    filter: blur(0.5px);
+}
+
+.bolt::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--lightning-glow);
+    clip-path: inherit;
+    filter: blur(3px);
+    opacity: 0.7;
+}
+
+.bolt-branch {
+    position: absolute;
+    width: 4px;
+    height: 80px;
+    background: var(--lightning-core);
+    top: 60px;
+    left: 15px;
+    transform: rotate(30deg);
+    clip-path: polygon(
+        50% 0%,
+        70% 30%,
+        55% 50%,
+        70% 80%,
+        50% 100%,
+        35% 80%,
+        50% 50%,
+        35% 30%
+    );
+    box-shadow:
+        0 0 8px var(--lightning-core),
+        0 0 15px var(--lightning-glow),
+        0 0 30px var(--lightning-outer);
+    opacity: 0.9;
+}
+
+.lightning-2 .bolt {
+    height: 250px;
+    transform: scaleX(-1);
+}
+
+.lightning-2 .bolt-branch {
+    left: -10px;
+    transform: rotate(-25deg);
+}
+
+.lightning-3 .bolt {
+    height: 180px;
+    width: 6px;
+}
+
+@keyframes lightning-flash {
+    0%, 100% {
+        opacity: 0;
+    }
+    1%, 2% {
+        opacity: 1;
+    }
+    3% {
+        opacity: 0.3;
+    }
+    4%, 5% {
+        opacity: 1;
+    }
+    6% {
+        opacity: 0;
+    }
+}
+
+/* Flash Overlay */
+.flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    animation: sky-flash 7s ease-in-out infinite;
+}
+
+@keyframes sky-flash {
+    0%, 100% {
+        opacity: 0;
+    }
+    1%, 2% {
+        opacity: 0.15;
+    }
+    3% {
+        opacity: 0.05;
+    }
+    4%, 5% {
+        opacity: 0.2;
+    }
+    6% {
+        opacity: 0;
+    }
+}
+
+/* Rain */
+.rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--rain-color) 50%,
+        transparent 100%
+    );
+    animation: rain-fall 0.8s linear infinite;
+}
+
+.rain-drop:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 0.7s; }
+.rain-drop:nth-child(2) { left: 15%; animation-delay: 0.1s; animation-duration: 0.9s; }
+.rain-drop:nth-child(3) { left: 25%; animation-delay: 0.3s; animation-duration: 0.75s; }
+.rain-drop:nth-child(4) { left: 35%; animation-delay: 0.15s; animation-duration: 0.85s; }
+.rain-drop:nth-child(5) { left: 45%; animation-delay: 0.4s; animation-duration: 0.7s; }
+.rain-drop:nth-child(6) { left: 55%; animation-delay: 0.2s; animation-duration: 0.8s; }
+.rain-drop:nth-child(7) { left: 65%; animation-delay: 0.35s; animation-duration: 0.9s; }
+.rain-drop:nth-child(8) { left: 75%; animation-delay: 0.05s; animation-duration: 0.75s; }
+.rain-drop:nth-child(9) { left: 85%; animation-delay: 0.25s; animation-duration: 0.85s; }
+.rain-drop:nth-child(10) { left: 95%; animation-delay: 0.45s; animation-duration: 0.7s; }
+.rain-drop:nth-child(11) { left: 10%; animation-delay: 0.5s; animation-duration: 0.8s; }
+.rain-drop:nth-child(12) { left: 90%; animation-delay: 0.6s; animation-duration: 0.9s; }
+
+@keyframes rain-fall {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Landscape */
+.landscape {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    z-index: 1;
+}
+
+.mountain {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.mountain-back {
+    height: 35%;
+    background: var(--mountain-back);
+    clip-path: polygon(
+        0% 100%,
+        0% 60%,
+        15% 30%,
+        25% 50%,
+        40% 20%,
+        50% 40%,
+        65% 10%,
+        80% 35%,
+        90% 25%,
+        100% 45%,
+        100% 100%
+    );
+}
+
+.mountain-mid {
+    height: 30%;
+    background: var(--mountain-mid);
+    clip-path: polygon(
+        0% 100%,
+        0% 50%,
+        10% 35%,
+        20% 55%,
+        35% 25%,
+        50% 50%,
+        60% 30%,
+        75% 45%,
+        85% 20%,
+        100% 40%,
+        100% 100%
+    );
+}
+
+.mountain-front {
+    height: 22%;
+    background: var(--mountain-front);
+    clip-path: polygon(
+        0% 100%,
+        0% 40%,
+        12% 60%,
+        25% 35%,
+        40% 55%,
+        55% 30%,
+        70% 50%,
+        82% 25%,
+        100% 50%,
+        100% 100%
+    );
+}
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    background: var(--ground);
+}
+
+/* Trees */
+.tree {
+    position: absolute;
+    bottom: 15%;
+    width: 30px;
+    height: 80px;
+    background: var(--tree-color);
+    clip-path: polygon(
+        50% 0%,
+        65% 30%,
+        58% 30%,
+        70% 55%,
+        60% 55%,
+        75% 80%,
+        55% 80%,
+        55% 100%,
+        45% 100%,
+        45% 80%,
+        25% 80%,
+        40% 55%,
+        30% 55%,
+        42% 30%,
+        35% 30%
+    );
+}
+
+.tree-1 {
+    left: 15%;
+    height: 90px;
+    width: 35px;
+}
+
+.tree-2 {
+    left: 80%;
+    height: 70px;
+    width: 25px;
+}
+
+.tree-3 {
+    left: 60%;
+    height: 60px;
+    width: 22px;
+}
+
+/* Content */
+.content {
+    position: relative;
+    z-index: 20;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(10, 10, 18, 0.7) 5%,
+        rgba(10, 10, 18, 0.9) 20%,
+        rgba(10, 10, 18, 0.95) 100%
+    );
+}
+
+.header {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-shadow:
+        0 0 20px var(--lightning-glow),
+        0 0 40px var(--lightning-outer);
+    margin-bottom: 1rem;
+    animation: title-glow 4s ease-in-out infinite;
+}
+
+@keyframes title-glow {
+    0%, 100% {
+        text-shadow:
+            0 0 20px var(--lightning-glow),
+            0 0 40px var(--lightning-outer);
+    }
+    50% {
+        text-shadow:
+            0 0 30px var(--lightning-glow),
+            0 0 60px var(--lightning-outer),
+            0 0 80px var(--lightning-outer);
+    }
+}
+
+.tagline {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+}
+
+/* Story Content */
+.story {
+    margin-bottom: 3rem;
+}
+
+.story h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--accent);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(123, 159, 212, 0.3);
+}
+
+.story h2:first-of-type {
+    margin-top: 0;
+}
+
+.story p {
+    margin-bottom: 1.2rem;
+    color: var(--text-light);
+    text-align: justify;
+}
+
+.story blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    background: rgba(123, 159, 212, 0.1);
+    border-left: 3px solid var(--accent);
+    font-style: italic;
+}
+
+.story blockquote p {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.story blockquote cite {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: normal;
+}
+
+/* Storm Facts */
+.storm-facts {
+    background: rgba(42, 42, 74, 0.5);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+}
+
+.storm-facts h3 {
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.storm-facts ul {
+    list-style: none;
+}
+
+.storm-facts li {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.storm-facts li:last-child {
+    border-bottom: none;
+}
+
+.fact-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--lightning-glow);
+    font-family: 'Arial', sans-serif;
+    text-shadow: 0 0 10px var(--lightning-outer);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 3rem 0;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content {
+        padding: 2rem 1rem;
+    }
+
+    .header {
+        padding: 3rem 0 2rem;
+    }
+
+    .cloud {
+        transform: scale(0.7);
+    }
+
+    .bolt {
+        height: 150px;
+        width: 6px;
+    }
+
+    .lightning-2 .bolt {
+        height: 180px;
+    }
+
+    .story blockquote {
+        padding: 1rem 1.5rem;
+    }
+
+    .storm-facts {
+        padding: 1.5rem;
+    }
+
+    .fact-number {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        letter-spacing: 0.05em;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .story h2 {
+        font-size: 1.5rem;
+    }
+
+    .tree {
+        display: none;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .lightning,
+    .flash-overlay,
+    .rain-drop,
+    .cloud {
+        animation: none;
+    }
+
+    .lightning {
+        opacity: 0.3;
+    }
+
+    .header h1 {
+        animation: none;
+    }
+}

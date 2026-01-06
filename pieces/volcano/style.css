@@ -1,0 +1,556 @@
+/* Volcano - Pure CSS Art Piece */
+/* Techniques: CSS gradients, keyframe animations, pseudo-elements, filters, blend modes */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --lava-orange: #ff6b35;
+    --lava-red: #d62828;
+    --lava-yellow: #fcbf49;
+    --ash-dark: #1a1a2e;
+    --ash-medium: #16213e;
+    --mountain-dark: #2d2d2d;
+    --mountain-light: #4a4a4a;
+    --smoke-color: rgba(80, 80, 80, 0.6);
+    --ember-glow: #ff9500;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--ash-dark);
+    font-family: 'Georgia', serif;
+    overflow-x: hidden;
+}
+
+.scene {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Sky with gradient */
+.sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        #0f0c29 0%,
+        #302b63 30%,
+        #24243e 50%,
+        #d62828 80%,
+        #ff6b35 100%
+    );
+    z-index: 0;
+}
+
+/* Twinkling stars */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 230px 80px, white, transparent),
+        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 400px 60px, white, transparent),
+        radial-gradient(2px 2px at 500px 100px, rgba(255,255,255,0.8), transparent);
+    background-size: 550px 200px;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Smoke clouds */
+.smoke-cloud {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--smoke-color);
+    filter: blur(20px);
+    opacity: 0;
+    animation: rise-smoke 8s ease-out infinite;
+}
+
+.smoke-1 {
+    width: 100px;
+    height: 100px;
+    left: calc(50% - 50px);
+    bottom: 45%;
+    animation-delay: 0s;
+}
+
+.smoke-2 {
+    width: 80px;
+    height: 80px;
+    left: calc(50% - 20px);
+    bottom: 45%;
+    animation-delay: 1.5s;
+}
+
+.smoke-3 {
+    width: 120px;
+    height: 120px;
+    left: calc(50% - 80px);
+    bottom: 45%;
+    animation-delay: 3s;
+}
+
+.smoke-4 {
+    width: 60px;
+    height: 60px;
+    left: calc(50%);
+    bottom: 45%;
+    animation-delay: 4.5s;
+}
+
+.smoke-5 {
+    width: 90px;
+    height: 90px;
+    left: calc(50% - 60px);
+    bottom: 45%;
+    animation-delay: 6s;
+}
+
+@keyframes rise-smoke {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-300px) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Volcano mountain */
+.volcano {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.mountain {
+    width: 0;
+    height: 0;
+    border-left: 250px solid transparent;
+    border-right: 250px solid transparent;
+    border-bottom: 350px solid var(--mountain-dark);
+    position: relative;
+    filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.3));
+}
+
+.mountain::before {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: -180px;
+    width: 0;
+    height: 0;
+    border-left: 180px solid transparent;
+    border-right: 180px solid transparent;
+    border-bottom: 290px solid var(--mountain-light);
+    opacity: 0.3;
+}
+
+.mountain-shadow {
+    position: absolute;
+    bottom: -350px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 100px;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.5), transparent);
+    border-radius: 50%;
+}
+
+/* Crater with lava glow */
+.crater {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(to bottom, #1a1a1a, var(--lava-red));
+    border-radius: 50%;
+    overflow: visible;
+}
+
+.lava-glow {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, var(--lava-yellow), var(--lava-orange), transparent);
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
+    filter: blur(10px);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateX(-50%) scale(1.3);
+        opacity: 1;
+    }
+}
+
+/* Lava bubbles in crater */
+.lava-bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--lava-yellow);
+    animation: bubble 3s ease-in-out infinite;
+}
+
+.bubble-1 {
+    width: 10px;
+    height: 10px;
+    top: 10px;
+    left: 20px;
+    animation-delay: 0s;
+}
+
+.bubble-2 {
+    width: 8px;
+    height: 8px;
+    top: 15px;
+    left: 45px;
+    animation-delay: 1s;
+}
+
+.bubble-3 {
+    width: 12px;
+    height: 12px;
+    top: 8px;
+    left: 35px;
+    animation-delay: 2s;
+}
+
+@keyframes bubble {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-10px) scale(1.2);
+        opacity: 0.7;
+    }
+}
+
+/* Lava flows down the mountain */
+.lava-flow {
+    position: absolute;
+    background: linear-gradient(
+        to bottom,
+        var(--lava-yellow),
+        var(--lava-orange),
+        var(--lava-red),
+        transparent
+    );
+    border-radius: 5px 5px 50% 50%;
+    animation: flow 4s ease-in-out infinite;
+}
+
+.flow-1 {
+    width: 15px;
+    height: 150px;
+    top: 20px;
+    left: -30px;
+    transform: rotate(-15deg);
+    animation-delay: 0s;
+}
+
+.flow-2 {
+    width: 20px;
+    height: 200px;
+    top: 30px;
+    left: -5px;
+    animation-delay: 1.3s;
+}
+
+.flow-3 {
+    width: 12px;
+    height: 120px;
+    top: 40px;
+    left: 20px;
+    transform: rotate(10deg);
+    animation-delay: 2.6s;
+}
+
+@keyframes flow {
+    0%, 100% {
+        opacity: 0.9;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1.3);
+    }
+}
+
+/* Ground */
+.ground {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to top, #1a1a1a, var(--mountain-dark));
+    z-index: 3;
+}
+
+.rock {
+    position: absolute;
+    background: #2d2d2d;
+    border-radius: 30% 70% 50% 50%;
+}
+
+.rock-1 {
+    width: 60px;
+    height: 40px;
+    bottom: 0;
+    left: 10%;
+}
+
+.rock-2 {
+    width: 80px;
+    height: 50px;
+    bottom: 0;
+    right: 15%;
+}
+
+.rock-3 {
+    width: 45px;
+    height: 30px;
+    bottom: 0;
+    right: 35%;
+}
+
+/* Flying embers */
+.ember {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--ember-glow);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--lava-orange), 0 0 20px var(--lava-red);
+    animation: float-ember 6s ease-out infinite;
+    z-index: 10;
+}
+
+.ember-1 { left: 48%; bottom: 45%; animation-delay: 0s; }
+.ember-2 { left: 50%; bottom: 45%; animation-delay: 0.8s; }
+.ember-3 { left: 52%; bottom: 45%; animation-delay: 1.6s; }
+.ember-4 { left: 49%; bottom: 45%; animation-delay: 2.4s; }
+.ember-5 { left: 51%; bottom: 45%; animation-delay: 3.2s; }
+.ember-6 { left: 47%; bottom: 45%; animation-delay: 4s; }
+.ember-7 { left: 53%; bottom: 45%; animation-delay: 4.8s; }
+.ember-8 { left: 50%; bottom: 45%; animation-delay: 5.6s; }
+
+@keyframes float-ember {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(-100px) translateX(30px) scale(0.8);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(-200px) translateX(-20px) scale(0.6);
+        opacity: 0.7;
+    }
+    75% {
+        transform: translateY(-300px) translateX(40px) scale(0.4);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-400px) translateX(-30px) scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* Content styling */
+.content {
+    position: relative;
+    z-index: 5;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px 150px;
+    color: #f0e6d3;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lava-yellow);
+    text-shadow:
+        0 0 20px var(--lava-orange),
+        0 0 40px var(--lava-red),
+        0 0 60px rgba(214, 40, 40, 0.5);
+    animation: title-glow 3s ease-in-out infinite;
+}
+
+@keyframes title-glow {
+    0%, 100% {
+        text-shadow:
+            0 0 20px var(--lava-orange),
+            0 0 40px var(--lava-red),
+            0 0 60px rgba(214, 40, 40, 0.5);
+    }
+    50% {
+        text-shadow:
+            0 0 30px var(--lava-yellow),
+            0 0 60px var(--lava-orange),
+            0 0 90px var(--lava-red);
+    }
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-style: italic;
+    color: rgba(240, 230, 211, 0.8);
+    margin-top: 10px;
+    letter-spacing: 0.2em;
+}
+
+article {
+    display: grid;
+    gap: 40px;
+}
+
+.story {
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 10px;
+    border-left: 4px solid var(--lava-orange);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story:hover {
+    transform: translateX(10px);
+    box-shadow: -10px 0 30px rgba(255, 107, 53, 0.3);
+}
+
+h2 {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    color: var(--lava-orange);
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+p {
+    line-height: 1.8;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: rgba(240, 230, 211, 0.9);
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    border-top: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+footer p {
+    font-style: italic;
+    color: rgba(240, 230, 211, 0.6);
+    letter-spacing: 0.1em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mountain {
+        border-left-width: 180px;
+        border-right-width: 180px;
+        border-bottom-width: 280px;
+    }
+
+    .flow-1, .flow-2, .flow-3 {
+        height: 100px;
+    }
+
+    .content {
+        padding: 40px 15px 180px;
+    }
+
+    .story {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mountain {
+        border-left-width: 140px;
+        border-right-width: 140px;
+        border-bottom-width: 220px;
+    }
+
+    .crater {
+        width: 60px;
+        height: 30px;
+    }
+
+    .lava-glow {
+        width: 40px;
+        height: 40px;
+    }
+
+    .smoke-cloud {
+        transform: scale(0.7);
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .smoke-cloud,
+    .lava-glow,
+    .lava-bubble,
+    .lava-flow,
+    .ember,
+    .stars,
+    h1 {
+        animation: none;
+    }
+
+    .lava-glow {
+        opacity: 0.9;
+    }
+
+    .ember {
+        display: none;
+    }
+}
