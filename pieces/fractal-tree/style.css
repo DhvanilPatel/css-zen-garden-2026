@@ -1,0 +1,366 @@
+/* Fractal Tree - Recursive branching pattern
+   Showcases: CSS transforms, nested structures, animations, natural fractals */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --sky-top: #1a1a2e;
+    --sky-mid: #2d3a4a;
+    --sky-bottom: #4a5568;
+    --ground: #2d1b0e;
+    --ground-grass: #1a3c1a;
+
+    --bark-dark: #3d2314;
+    --bark-light: #5c3d2e;
+    --leaf-green: #4ade80;
+    --leaf-light: #86efac;
+    --leaf-dark: #22c55e;
+
+    --text-light: #e8e8e8;
+    --text-muted: #a0a0a0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--sky-top);
+    color: var(--text-light);
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.scene {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Sky gradient */
+.sky {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--sky-top) 0%,
+        var(--sky-mid) 50%,
+        var(--sky-bottom) 100%
+    );
+    z-index: 0;
+}
+
+/* Tree container */
+.tree-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
+    min-height: 60vh;
+}
+
+.tree {
+    position: relative;
+    width: 300px;
+    height: 350px;
+}
+
+/* Branch base styles */
+.branch {
+    position: absolute;
+    background: linear-gradient(90deg, var(--bark-dark), var(--bark-light), var(--bark-dark));
+    border-radius: 2px;
+    transform-origin: bottom center;
+}
+
+/* Trunk */
+.trunk {
+    width: 20px;
+    height: 100px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--bark-dark), var(--bark-light), var(--bark-dark));
+}
+
+/* Level 1 branches */
+.b1-left, .b1-right, .b1-center {
+    width: 12px;
+    height: 70px;
+    bottom: 100%;
+    left: 50%;
+}
+
+.b1-left {
+    transform: translateX(-50%) rotate(-35deg);
+    animation: sway-left 6s ease-in-out infinite;
+}
+
+.b1-right {
+    transform: translateX(-50%) rotate(35deg);
+    animation: sway-right 6s ease-in-out infinite;
+}
+
+.b1-center {
+    transform: translateX(-50%) rotate(0deg);
+    height: 50px;
+}
+
+/* Level 2 branches */
+.b2-left, .b2-right {
+    width: 8px;
+    height: 45px;
+    bottom: 100%;
+    left: 50%;
+}
+
+.b2-left {
+    transform: translateX(-50%) rotate(-30deg);
+}
+
+.b2-right {
+    transform: translateX(-50%) rotate(30deg);
+}
+
+/* Level 3 branches */
+.b3-left, .b3-right {
+    width: 5px;
+    height: 30px;
+    bottom: 100%;
+    left: 50%;
+}
+
+.b3-left {
+    transform: translateX(-50%) rotate(-25deg);
+}
+
+.b3-right {
+    transform: translateX(-50%) rotate(25deg);
+}
+
+/* Leaves */
+.leaf {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, var(--leaf-light) 0%, var(--leaf-green) 50%, var(--leaf-dark) 100%);
+    border-radius: 50% 0 50% 0;
+    animation: leaf-flutter 3s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+}
+
+/* Stagger leaf animations */
+.b1-left .b2-left .b3-left .leaf { animation-delay: 0s; }
+.b1-left .b2-left .b3-right .leaf { animation-delay: 0.5s; }
+.b1-left .b2-right .b3-left .leaf { animation-delay: 1s; }
+.b1-left .b2-right .b3-right .leaf { animation-delay: 1.5s; }
+.b1-right .b2-left .b3-left .leaf { animation-delay: 0.25s; }
+.b1-right .b2-left .b3-right .leaf { animation-delay: 0.75s; }
+.b1-right .b2-right .b3-left .leaf { animation-delay: 1.25s; }
+.b1-right .b2-right .b3-right .leaf { animation-delay: 1.75s; }
+.b1-center .b2-left .leaf { animation-delay: 2s; }
+.b1-center .b2-right .leaf { animation-delay: 2.25s; }
+
+@keyframes sway-left {
+    0%, 100% { transform: translateX(-50%) rotate(-35deg); }
+    50% { transform: translateX(-50%) rotate(-40deg); }
+}
+
+@keyframes sway-right {
+    0%, 100% { transform: translateX(-50%) rotate(35deg); }
+    50% { transform: translateX(-50%) rotate(40deg); }
+}
+
+@keyframes leaf-flutter {
+    0%, 100% {
+        transform: translateX(-50%) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) rotate(10deg) scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+/* Ground */
+.ground {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(
+        to bottom,
+        var(--ground-grass) 0%,
+        var(--ground) 40%,
+        #1a0f08 100%
+    );
+    position: relative;
+}
+
+.ground::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 8px,
+        var(--leaf-dark) 8px,
+        var(--leaf-dark) 10px
+    );
+    opacity: 0.5;
+}
+
+/* Content */
+.content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background: linear-gradient(180deg,
+        rgba(26, 26, 46, 0.9) 0%,
+        rgba(26, 26, 46, 0.95) 100%
+    );
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--leaf-green);
+    text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.text {
+    margin-bottom: 2rem;
+}
+
+.philosophy {
+    font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+    text-align: center;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--leaf-dark);
+    background: rgba(74, 222, 128, 0.05);
+    font-style: italic;
+}
+
+.sections {
+    display: grid;
+    gap: 2rem;
+}
+
+section {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--text-muted);
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+section h3 {
+    font-size: 1.2rem;
+    color: var(--leaf-light);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+section p {
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bark-dark);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .tree {
+        transform: scale(0.8);
+    }
+
+    .content {
+        padding: 2rem 1rem;
+    }
+
+    .tree-container {
+        padding-top: 1rem;
+        min-height: 50vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .b1-left, .b1-right {
+        animation: none;
+    }
+
+    .leaf {
+        animation: none;
+    }
+}
+
+/* Stars for night sky effect */
+.sky::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, white, transparent),
+        radial-gradient(1px 1px at 40px 70px, white, transparent),
+        radial-gradient(1px 1px at 50px 160px, white, transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(1px 1px at 130px 80px, white, transparent),
+        radial-gradient(1px 1px at 160px 120px, white, transparent),
+        radial-gradient(1px 1px at 200px 50px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 250px 100px, white, transparent),
+        radial-gradient(1px 1px at 300px 60px, white, transparent),
+        radial-gradient(1px 1px at 350px 140px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 400px 30px, white, transparent),
+        radial-gradient(1.5px 1.5px at 450px 90px, white, transparent),
+        radial-gradient(1px 1px at 500px 150px, white, transparent),
+        radial-gradient(1px 1px at 80px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 180px 180px, white, transparent),
+        radial-gradient(1px 1px at 280px 220px, white, transparent),
+        radial-gradient(1.5px 1.5px at 380px 200px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 480px 240px, white, transparent);
+    background-repeat: repeat;
+    background-size: 500px 250px;
+    animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}

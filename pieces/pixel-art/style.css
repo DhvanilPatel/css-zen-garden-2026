@@ -1,0 +1,425 @@
+/* === PIXEL ART === */
+/* 8-bit landscape using box-shadow technique */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sky-top: #5c94fc;
+  --sky-bottom: #a8d8ff;
+  --sun-yellow: #fcbc00;
+  --sun-orange: #f87800;
+  --ground-green: #00a800;
+  --ground-dark: #006800;
+  --tree-green: #007800;
+  --tree-trunk: #8b4513;
+  --mountain-purple: #6b5a9e;
+  --mountain-light: #9b8ac9;
+  --white: #fcfcfc;
+  --pixel: 4px;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 60%, var(--ground-green) 60%, var(--ground-dark) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #fff;
+  image-rendering: pixelated;
+}
+
+/* === SCENE === */
+.scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* === PIXEL SUN === */
+.pixel-sun {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: var(--pixel);
+  height: var(--pixel);
+  background: var(--sun-yellow);
+  box-shadow:
+    /* Core - 6x6 pixel sun */
+    calc(var(--pixel) * 1) 0 var(--sun-yellow),
+    calc(var(--pixel) * 2) 0 var(--sun-yellow),
+    calc(var(--pixel) * 3) 0 var(--sun-yellow),
+    calc(var(--pixel) * 4) 0 var(--sun-yellow),
+    calc(var(--pixel) * 5) 0 var(--sun-yellow),
+    0 calc(var(--pixel) * 1) var(--sun-yellow),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) var(--sun-orange),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--sun-orange),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 1) var(--sun-orange),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 1) var(--sun-orange),
+    calc(var(--pixel) * 5) calc(var(--pixel) * 1) var(--sun-yellow),
+    0 calc(var(--pixel) * 2) var(--sun-yellow),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--sun-orange),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 2) var(--sun-yellow),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 2) var(--sun-yellow),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 2) var(--sun-orange),
+    calc(var(--pixel) * 5) calc(var(--pixel) * 2) var(--sun-yellow),
+    0 calc(var(--pixel) * 3) var(--sun-yellow),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) var(--sun-orange),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 3) var(--sun-yellow),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 3) var(--sun-yellow),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 3) var(--sun-orange),
+    calc(var(--pixel) * 5) calc(var(--pixel) * 3) var(--sun-yellow),
+    0 calc(var(--pixel) * 4) var(--sun-yellow),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 4) var(--sun-orange),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 4) var(--sun-orange),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 4) var(--sun-orange),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 4) var(--sun-orange),
+    calc(var(--pixel) * 5) calc(var(--pixel) * 4) var(--sun-yellow),
+    0 calc(var(--pixel) * 5) var(--sun-yellow),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 5) var(--sun-yellow),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 5) var(--sun-yellow),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 5) var(--sun-yellow),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 5) var(--sun-yellow),
+    calc(var(--pixel) * 5) calc(var(--pixel) * 5) var(--sun-yellow);
+  animation: sun-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
+}
+
+/* === PIXEL CLOUDS === */
+.cloud {
+  position: absolute;
+  width: var(--pixel);
+  height: var(--pixel);
+  background: var(--white);
+  animation: cloud-float 20s linear infinite;
+}
+
+.cloud-1 {
+  top: 15%;
+  left: 10%;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--white),
+    calc(var(--pixel) * 2) 0 var(--white),
+    calc(var(--pixel) * 3) 0 var(--white),
+    calc(var(--pixel) * -1) calc(var(--pixel) * 1) var(--white),
+    0 calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 1) var(--white);
+}
+
+.cloud-2 {
+  top: 25%;
+  left: 60%;
+  animation-delay: -10s;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--white),
+    calc(var(--pixel) * 2) 0 var(--white),
+    calc(var(--pixel) * -1) calc(var(--pixel) * 1) var(--white),
+    0 calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--white),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 1) var(--white);
+}
+
+@keyframes cloud-float {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100vw); }
+}
+
+/* === PIXEL MOUNTAINS === */
+.pixel-mountains {
+  position: absolute;
+  bottom: 45%;
+  left: 20%;
+  width: var(--pixel);
+  height: var(--pixel);
+  background: var(--mountain-purple);
+  box-shadow:
+    /* Left mountain */
+    calc(var(--pixel) * 1) 0 var(--mountain-purple),
+    calc(var(--pixel) * 2) 0 var(--mountain-purple),
+    calc(var(--pixel) * -1) calc(var(--pixel) * 1) var(--mountain-purple),
+    0 calc(var(--pixel) * 1) var(--mountain-light),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * -2) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * -1) calc(var(--pixel) * 2) var(--mountain-light),
+    0 calc(var(--pixel) * 2) var(--mountain-light),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 2) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 3) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 4) calc(var(--pixel) * 2) var(--mountain-purple),
+    /* Right mountain */
+    calc(var(--pixel) * 10) 0 var(--mountain-purple),
+    calc(var(--pixel) * 11) 0 var(--mountain-light),
+    calc(var(--pixel) * 9) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * 10) calc(var(--pixel) * 1) var(--mountain-light),
+    calc(var(--pixel) * 11) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * 12) calc(var(--pixel) * 1) var(--mountain-purple),
+    calc(var(--pixel) * 8) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 9) calc(var(--pixel) * 2) var(--mountain-light),
+    calc(var(--pixel) * 10) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 11) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 12) calc(var(--pixel) * 2) var(--mountain-purple),
+    calc(var(--pixel) * 13) calc(var(--pixel) * 2) var(--mountain-purple);
+}
+
+/* === PIXEL TREES === */
+.tree {
+  position: absolute;
+  bottom: 42%;
+  width: var(--pixel);
+  height: var(--pixel);
+  background: var(--tree-green);
+}
+
+.tree-1 {
+  left: 5%;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--tree-green),
+    calc(var(--pixel) * 2) 0 var(--tree-green),
+    0 calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) #00a800,
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--tree-trunk),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) var(--tree-trunk);
+}
+
+.tree-2 {
+  left: 75%;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--tree-green),
+    calc(var(--pixel) * 2) 0 var(--tree-green),
+    0 calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) #00a800,
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--tree-trunk),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) var(--tree-trunk);
+}
+
+.tree-3 {
+  left: 85%;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--tree-green),
+    calc(var(--pixel) * 2) 0 var(--tree-green),
+    0 calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) #00a800,
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--tree-trunk),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) var(--tree-trunk);
+}
+
+.tree-4 {
+  left: 15%;
+  box-shadow:
+    calc(var(--pixel) * 1) 0 var(--tree-green),
+    calc(var(--pixel) * 2) 0 var(--tree-green),
+    0 calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) #00a800,
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) var(--tree-green),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) var(--tree-trunk),
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) var(--tree-trunk);
+}
+
+/* === PIXEL CHARACTER === */
+.pixel-character {
+  position: absolute;
+  bottom: 40%;
+  left: 50%;
+  width: var(--pixel);
+  height: var(--pixel);
+  background: #ffcc99;
+  animation: character-bounce 0.5s ease-in-out infinite;
+  box-shadow:
+    /* Head */
+    calc(var(--pixel) * 1) 0 #ffcc99,
+    0 calc(var(--pixel) * -1) #ffcc99,
+    calc(var(--pixel) * 1) calc(var(--pixel) * -1) #ffcc99,
+    /* Hair */
+    0 calc(var(--pixel) * -2) #8b4513,
+    calc(var(--pixel) * 1) calc(var(--pixel) * -2) #8b4513,
+    /* Body */
+    0 calc(var(--pixel) * 1) #e74c3c,
+    calc(var(--pixel) * 1) calc(var(--pixel) * 1) #e74c3c,
+    0 calc(var(--pixel) * 2) #e74c3c,
+    calc(var(--pixel) * 1) calc(var(--pixel) * 2) #e74c3c,
+    /* Arms */
+    calc(var(--pixel) * -1) calc(var(--pixel) * 1) #ffcc99,
+    calc(var(--pixel) * 2) calc(var(--pixel) * 1) #ffcc99,
+    /* Legs */
+    0 calc(var(--pixel) * 3) #2980b9,
+    calc(var(--pixel) * 1) calc(var(--pixel) * 3) #2980b9;
+}
+
+@keyframes character-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* === CONTENT === */
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* === HERO === */
+.hero {
+  text-align: center;
+  padding: 4rem 0 3rem;
+}
+
+.title {
+  font-size: clamp(3rem, 12vw, 7rem);
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--white);
+  text-shadow:
+    4px 4px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  color: var(--sun-yellow);
+  margin-top: 1rem;
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.3em;
+}
+
+/* === CARDS === */
+.cards {
+  display: grid;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.7);
+  border: 4px solid var(--white);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 2px solid var(--white);
+  pointer-events: none;
+}
+
+.card-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 1rem;
+}
+
+.card-icon.heart {
+  background: #e74c3c;
+  clip-path: polygon(50% 100%, 0% 35%, 25% 0%, 50% 20%, 75% 0%, 100% 35%);
+}
+
+.card-icon.star {
+  background: var(--sun-yellow);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.card-icon.coin {
+  background: var(--sun-yellow);
+  border-radius: 50%;
+  box-shadow: inset -4px -4px 0 var(--sun-orange);
+}
+
+.card h2 {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  color: var(--sun-yellow);
+  margin-bottom: 0.75rem;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.card p {
+  color: var(--white);
+  line-height: 1.8;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+}
+
+/* === FOOTER === */
+.footer {
+  text-align: center;
+  padding: 3rem 0 2rem;
+}
+
+.score {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--sun-yellow);
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom: 0.5rem;
+}
+
+.credit {
+  color: var(--white);
+  font-size: 0.9rem;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* === RESPONSIVE === */
+@media (min-width: 600px) {
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  :root {
+    --pixel: 6px;
+  }
+}
+
+@media (min-width: 900px) {
+  .content {
+    padding: 3rem 2rem;
+  }
+
+  .hero {
+    padding: 6rem 0 4rem;
+  }
+
+  :root {
+    --pixel: 8px;
+  }
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  .pixel-sun,
+  .cloud,
+  .pixel-character,
+  .credit {
+    animation: none;
+  }
+}

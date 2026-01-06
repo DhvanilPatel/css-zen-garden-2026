@@ -1,0 +1,348 @@
+/* Tessellation - M.C. Escher-style patterns
+   Showcases: CSS patterns, clip-path, repeating gradients, animations */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-warm: #f5e6d3;
+    --bg-cool: #e8e0d5;
+    --tile-dark: #2c1810;
+    --tile-light: #d4a574;
+    --tile-mid: #8b5a2b;
+    --accent-1: #c17f59;
+    --accent-2: #5c4033;
+    --text-dark: #2c1810;
+    --text-light: #f5e6d3;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Garamond', 'Times New Roman', serif;
+    background: var(--bg-warm);
+    color: var(--text-dark);
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.scene {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Background tessellation pattern */
+.tessellation-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0.15;
+}
+
+.pattern-layer {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+}
+
+/* Hexagonal pattern using conic gradients */
+.layer-1 {
+    background:
+        repeating-conic-gradient(
+            from 0deg at 50% 50%,
+            var(--tile-dark) 0deg 60deg,
+            transparent 60deg 120deg
+        );
+    background-size: 60px 52px;
+    animation: drift 60s linear infinite;
+}
+
+.layer-2 {
+    background:
+        repeating-linear-gradient(
+            60deg,
+            transparent 0px,
+            transparent 28px,
+            var(--tile-mid) 28px,
+            var(--tile-mid) 30px
+        ),
+        repeating-linear-gradient(
+            -60deg,
+            transparent 0px,
+            transparent 28px,
+            var(--tile-mid) 28px,
+            var(--tile-mid) 30px
+        );
+    background-size: 58px 100px;
+    animation: drift 80s linear infinite reverse;
+}
+
+.layer-3 {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 48px,
+            var(--accent-2) 48px,
+            var(--accent-2) 50px
+        );
+    background-size: 50px 50px;
+    animation: drift 100s linear infinite;
+}
+
+@keyframes drift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 100px); }
+}
+
+/* Showcase container */
+.showcase {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+/* Tile grid - interlocking pattern */
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: repeat(4, 60px);
+    gap: 0;
+    transform: rotate(-5deg);
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.3));
+}
+
+/* Base tile styles */
+.tile {
+    width: 80px;
+    height: 60px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.tile:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* Bird tiles - using clip-path for bird silhouette */
+.bird {
+    background: var(--tile-dark);
+    clip-path: polygon(
+        0% 20%,
+        15% 0%,
+        30% 10%,
+        50% 5%,
+        70% 15%,
+        85% 10%,
+        100% 25%,
+        95% 50%,
+        100% 75%,
+        80% 90%,
+        60% 85%,
+        40% 95%,
+        20% 85%,
+        0% 80%,
+        5% 50%
+    );
+    animation: bird-bob 4s ease-in-out infinite;
+}
+
+.bird-1, .bird-3, .bird-5, .bird-7 {
+    animation-delay: 0s;
+}
+
+.bird-2, .bird-4, .bird-6, .bird-8 {
+    animation-delay: -2s;
+}
+
+@keyframes bird-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Fish tiles - complementary shape */
+.fish {
+    background: var(--tile-light);
+    clip-path: polygon(
+        5% 50%,
+        0% 20%,
+        20% 15%,
+        40% 5%,
+        60% 15%,
+        80% 10%,
+        100% 20%,
+        95% 50%,
+        100% 80%,
+        85% 90%,
+        70% 85%,
+        50% 95%,
+        30% 90%,
+        15% 100%,
+        0% 80%
+    );
+    animation: fish-swim 3s ease-in-out infinite;
+}
+
+.fish-1, .fish-3, .fish-5, .fish-7 {
+    animation-delay: -1.5s;
+}
+
+.fish-2, .fish-4, .fish-6, .fish-8 {
+    animation-delay: 0s;
+}
+
+@keyframes fish-swim {
+    0%, 100% { transform: translateX(0) scaleX(1); }
+    25% { transform: translateX(2px) scaleX(0.98); }
+    75% { transform: translateX(-2px) scaleX(1.02); }
+}
+
+/* Content */
+.content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(180deg,
+        rgba(245, 230, 211, 0.95) 0%,
+        rgba(245, 230, 211, 0.98) 100%
+    );
+    border-top: 4px solid var(--tile-mid);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--tile-mid);
+}
+
+h1 {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--tile-dark);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-style: italic;
+    color: var(--tile-mid);
+}
+
+.text {
+    margin-bottom: 2rem;
+}
+
+.lead {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-left: 3px solid var(--accent-1);
+    border-right: 3px solid var(--accent-1);
+    background: rgba(193, 127, 89, 0.1);
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.column h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-2);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.column p {
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.closing {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--tile-mid);
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--tile-mid);
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .tile-grid {
+        grid-template-columns: repeat(4, 60px);
+        grid-template-rows: repeat(4, 45px);
+    }
+
+    .tile {
+        width: 60px;
+        height: 45px;
+    }
+
+    .showcase {
+        padding: 2rem 0.5rem;
+    }
+
+    .content {
+        padding: 1.5rem 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .layer-1, .layer-2, .layer-3 {
+        animation: none;
+    }
+
+    .bird {
+        animation: none;
+    }
+
+    .fish {
+        animation: none;
+    }
+}
+
+/* Dark mode adaptation */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-warm: #1a1410;
+        --bg-cool: #221a14;
+        --tile-dark: #f5e6d3;
+        --tile-light: #2c1810;
+        --text-dark: #f5e6d3;
+        --text-light: #2c1810;
+    }
+
+    .content {
+        background: linear-gradient(180deg,
+            rgba(26, 20, 16, 0.95) 0%,
+            rgba(26, 20, 16, 0.98) 100%
+        );
+    }
+}

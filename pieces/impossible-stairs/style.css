@@ -1,0 +1,298 @@
+/* Impossible Stairs - Escher-style impossible geometry
+   Showcases: 3D transforms, perspective, isometric illusions, animations */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --stone-light: #d4cfc7;
+    --stone-mid: #a39e94;
+    --stone-dark: #6b675f;
+    --stone-shadow: #4a4740;
+    --bg-dark: #1a1a1f;
+    --bg-gradient: #2a2a32;
+    --accent: #8b7355;
+    --text-light: #e8e4dc;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-gradient) 100%);
+    color: var(--text-light);
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.scene {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Escher structure container */
+.escher-structure {
+    position: relative;
+    width: min(90vw, 500px);
+    height: min(70vw, 400px);
+    margin: 2rem 0;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Individual steps with 3D effect */
+.step {
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    transform-style: preserve-3d;
+}
+
+.step::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--stone-light);
+    transform: rotateX(-30deg) skewX(-30deg);
+    box-shadow: inset -2px -2px 4px var(--stone-mid);
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    right: -18px;
+    background: var(--stone-dark);
+    transform: skewY(-60deg);
+    transform-origin: top left;
+}
+
+/* Position steps in ascending/descending pattern */
+.step-1 { left: 30%; bottom: 60%; }
+.step-2 { left: 35%; bottom: 63%; }
+.step-3 { left: 40%; bottom: 66%; }
+.step-4 { left: 45%; bottom: 69%; }
+.step-5 { left: 50%; bottom: 66%; }
+.step-6 { left: 55%; bottom: 63%; }
+.step-7 { left: 60%; bottom: 60%; }
+.step-8 { left: 55%; bottom: 57%; }
+.step-9 { left: 50%; bottom: 54%; }
+.step-10 { left: 45%; bottom: 51%; }
+.step-11 { left: 40%; bottom: 54%; }
+.step-12 { left: 35%; bottom: 57%; }
+
+/* Pillars */
+.pillar {
+    position: absolute;
+    width: 25px;
+    background: linear-gradient(90deg, var(--stone-dark) 0%, var(--stone-mid) 50%, var(--stone-dark) 100%);
+    box-shadow:
+        inset 2px 0 4px rgba(255,255,255,0.1),
+        inset -2px 0 4px rgba(0,0,0,0.3);
+}
+
+.pillar-1 {
+    left: 20%;
+    bottom: 20%;
+    height: 50%;
+}
+
+.pillar-2 {
+    right: 20%;
+    bottom: 20%;
+    height: 45%;
+}
+
+.pillar-3 {
+    left: 35%;
+    bottom: 15%;
+    height: 35%;
+}
+
+.pillar-4 {
+    right: 35%;
+    bottom: 15%;
+    height: 40%;
+}
+
+/* Platforms */
+.platform {
+    position: absolute;
+    background: var(--stone-mid);
+    transform: skewX(-30deg);
+    box-shadow:
+        5px 5px 0 var(--stone-dark),
+        inset 0 2px 4px rgba(255,255,255,0.2);
+}
+
+.platform-top {
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    height: 15px;
+}
+
+.platform-left {
+    top: 35%;
+    left: 15%;
+    width: 25%;
+    height: 12px;
+    transform: skewX(-30deg) rotate(-10deg);
+}
+
+.platform-right {
+    top: 35%;
+    right: 15%;
+    width: 25%;
+    height: 12px;
+    transform: skewX(-30deg) rotate(10deg);
+}
+
+.platform-bottom {
+    bottom: 15%;
+    left: 20%;
+    width: 60%;
+    height: 18px;
+}
+
+/* Walking figures */
+.walker {
+    position: absolute;
+    width: 12px;
+    height: 24px;
+    background: var(--stone-shadow);
+    border-radius: 6px 6px 0 0;
+    animation: walk 8s linear infinite;
+}
+
+.walker::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 1px;
+    width: 10px;
+    height: 10px;
+    background: var(--stone-shadow);
+    border-radius: 50%;
+}
+
+.walker-1 {
+    animation-delay: 0s;
+}
+
+.walker-2 {
+    animation-delay: -2.6s;
+}
+
+.walker-3 {
+    animation-delay: -5.3s;
+}
+
+@keyframes walk {
+    0% { left: 32%; bottom: 62%; }
+    8% { left: 37%; bottom: 65%; }
+    16% { left: 42%; bottom: 68%; }
+    24% { left: 47%; bottom: 71%; }
+    32% { left: 52%; bottom: 68%; }
+    40% { left: 57%; bottom: 65%; }
+    48% { left: 62%; bottom: 62%; }
+    56% { left: 57%; bottom: 59%; }
+    64% { left: 52%; bottom: 56%; }
+    72% { left: 47%; bottom: 53%; }
+    80% { left: 42%; bottom: 56%; }
+    88% { left: 37%; bottom: 59%; }
+    100% { left: 32%; bottom: 62%; }
+}
+
+/* Content */
+.content {
+    max-width: 600px;
+    text-align: center;
+    padding: 2rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone-light);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-style: italic;
+    color: var(--stone-mid);
+    letter-spacing: 0.1em;
+}
+
+.text {
+    margin-bottom: 2rem;
+}
+
+.quote {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(139, 115, 85, 0.1);
+    text-align: left;
+}
+
+.text p {
+    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    text-align: justify;
+}
+
+.footer {
+    font-size: 0.85rem;
+    color: var(--stone-mid);
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .escher-structure {
+        transform: scale(0.8);
+    }
+
+    .content {
+        padding: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .walker {
+        animation: none;
+        left: 45%;
+        bottom: 65%;
+    }
+
+    .walker-2 {
+        left: 55%;
+        bottom: 62%;
+    }
+
+    .walker-3 {
+        left: 40%;
+        bottom: 58%;
+    }
+}

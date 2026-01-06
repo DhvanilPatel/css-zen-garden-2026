@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Tree | CSS Zen Garden</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scene">
+        <!-- Sky gradient background -->
+        <div class="sky"></div>
+
+        <!-- The fractal tree structure -->
+        <div class="tree-container">
+            <div class="tree">
+                <!-- Trunk -->
+                <div class="branch trunk">
+                    <!-- Level 1 branches -->
+                    <div class="branch b1-left">
+                        <!-- Level 2 -->
+                        <div class="branch b2-left">
+                            <div class="branch b3-left">
+                                <div class="leaf"></div>
+                            </div>
+                            <div class="branch b3-right">
+                                <div class="leaf"></div>
+                            </div>
+                        </div>
+                        <div class="branch b2-right">
+                            <div class="branch b3-left">
+                                <div class="leaf"></div>
+                            </div>
+                            <div class="branch b3-right">
+                                <div class="leaf"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="branch b1-right">
+                        <div class="branch b2-left">
+                            <div class="branch b3-left">
+                                <div class="leaf"></div>
+                            </div>
+                            <div class="branch b3-right">
+                                <div class="leaf"></div>
+                            </div>
+                        </div>
+                        <div class="branch b2-right">
+                            <div class="branch b3-left">
+                                <div class="leaf"></div>
+                            </div>
+                            <div class="branch b3-right">
+                                <div class="leaf"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Center continuation -->
+                    <div class="branch b1-center">
+                        <div class="branch b2-left">
+                            <div class="leaf"></div>
+                        </div>
+                        <div class="branch b2-right">
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ground -->
+            <div class="ground"></div>
+        </div>
+
+        <main class="content">
+            <header class="header">
+                <h1>Recursive Growth</h1>
+                <p class="tagline">Each branch contains the whole</p>
+            </header>
+
+            <article class="text">
+                <p class="philosophy">"The part contains the pattern of the whole. Break a branch from a tree, and you hold a smaller tree in your hands." — Benoit Mandelbrot</p>
+
+                <div class="sections">
+                    <section>
+                        <h3>The Algorithm of Life</h3>
+                        <p>Nature discovered fractals long before mathematics gave them a name. Every tree follows the same simple rule: divide, angle, repeat. From trunk to twig, the pattern persists.</p>
+                    </section>
+
+                    <section>
+                        <h3>Scale Invariance</h3>
+                        <p>Zoom into a branch. You find smaller branches. Zoom again. The pattern continues. At what point does branch become twig? The boundary dissolves under examination.</p>
+                    </section>
+
+                    <section>
+                        <h3>Infinite Complexity</h3>
+                        <p>A finite rule generates infinite detail. This is the magic of recursion: simplicity breeding complexity, order emerging from repetition.</p>
+                    </section>
+                </div>
+            </article>
+
+            <footer class="footer">
+                <p>From "The Geometry of Nature" — Fractal Studies Quarterly</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>

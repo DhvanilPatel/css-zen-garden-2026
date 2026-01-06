@@ -1,0 +1,544 @@
+/* Isometric City - Building blocks in isometric view
+   Showcases: CSS transforms, skew, 3D illusions, custom properties */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --sky-top: #1a1a2e;
+    --sky-bottom: #16213e;
+    --ground: #0f0f23;
+
+    --building-1: #e94560;
+    --building-1-dark: #b8374d;
+    --building-2: #0f4c75;
+    --building-2-dark: #0a3655;
+    --building-3: #3282b8;
+    --building-3-dark: #256a96;
+    --building-4: #bbe1fa;
+    --building-4-dark: #8cc4e8;
+    --building-5: #1b262c;
+    --building-5-dark: #0f1518;
+
+    --window-lit: #ffc93c;
+    --window-dark: #1a1a2e;
+    --street: #2d2d44;
+    --tree: #00a896;
+    --tree-dark: #007d6e;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+    color: #e8e8e8;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+/* City container - isometric transformation */
+.city {
+    position: relative;
+    width: min(95vw, 600px);
+    height: min(70vw, 450px);
+    margin: 2rem 0;
+    transform: rotateX(60deg) rotateZ(-45deg);
+    transform-style: preserve-3d;
+    background: var(--ground);
+}
+
+/* Base building structure */
+.building {
+    position: absolute;
+    transform-style: preserve-3d;
+}
+
+.face {
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+/* Building faces - front, side, top */
+.front {
+    transform-origin: bottom left;
+    transform: rotateY(0deg);
+}
+
+.side {
+    transform-origin: bottom left;
+    transform: rotateY(-90deg);
+}
+
+.top {
+    transform-origin: bottom left;
+    transform: rotateX(90deg);
+}
+
+/* Tower 1 - Tall red building */
+.tower-1 {
+    left: 10%;
+    top: 10%;
+    width: 80px;
+    height: 80px;
+}
+
+.tower-1 .front {
+    width: 80px;
+    height: 180px;
+    background: linear-gradient(180deg, var(--building-1) 0%, var(--building-1-dark) 100%);
+    transform: translateZ(180px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.tower-1 .side {
+    width: 80px;
+    height: 180px;
+    background: var(--building-1-dark);
+    transform: translateZ(180px) rotateX(-90deg) rotateY(-90deg) translateX(-80px);
+    transform-origin: top left;
+}
+
+.tower-1 .top {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ff6b7a 0%, var(--building-1) 100%);
+    transform: translateZ(180px);
+}
+
+/* Office 1 - Blue medium building */
+.office-1 {
+    left: 35%;
+    top: 5%;
+    width: 100px;
+    height: 70px;
+}
+
+.office-1 .front {
+    width: 100px;
+    height: 120px;
+    background: linear-gradient(180deg, var(--building-2) 0%, var(--building-2-dark) 100%);
+    transform: translateZ(120px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.office-1 .side {
+    width: 70px;
+    height: 120px;
+    background: var(--building-2-dark);
+    transform: translateZ(120px) rotateX(-90deg) rotateY(-90deg) translateX(-70px);
+    transform-origin: top left;
+}
+
+.office-1 .top {
+    width: 100px;
+    height: 70px;
+    background: linear-gradient(135deg, #1a6a9e 0%, var(--building-2) 100%);
+    transform: translateZ(120px);
+}
+
+/* Apartment 1 */
+.apartment-1 {
+    left: 65%;
+    top: 15%;
+    width: 90px;
+    height: 60px;
+}
+
+.apartment-1 .front {
+    width: 90px;
+    height: 100px;
+    background: linear-gradient(180deg, var(--building-3) 0%, var(--building-3-dark) 100%);
+    transform: translateZ(100px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.apartment-1 .side {
+    width: 60px;
+    height: 100px;
+    background: var(--building-3-dark);
+    transform: translateZ(100px) rotateX(-90deg) rotateY(-90deg) translateX(-60px);
+    transform-origin: top left;
+}
+
+.apartment-1 .top {
+    width: 90px;
+    height: 60px;
+    background: linear-gradient(135deg, #4a9fd4 0%, var(--building-3) 100%);
+    transform: translateZ(100px);
+}
+
+/* Shop 1 - Small building with awning */
+.shop-1 {
+    left: 8%;
+    top: 45%;
+    width: 70px;
+    height: 50px;
+}
+
+.shop-1 .front {
+    width: 70px;
+    height: 50px;
+    background: var(--building-4);
+    transform: translateZ(50px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.shop-1 .side {
+    width: 50px;
+    height: 50px;
+    background: var(--building-4-dark);
+    transform: translateZ(50px) rotateX(-90deg) rotateY(-90deg) translateX(-50px);
+    transform-origin: top left;
+}
+
+.shop-1 .top {
+    width: 70px;
+    height: 50px;
+    background: #d4e8f7;
+    transform: translateZ(50px);
+}
+
+.shop-1 .awning {
+    position: absolute;
+    width: 75px;
+    height: 15px;
+    background: #e94560;
+    transform: translateZ(35px) translateX(-2px) translateY(52px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Tower 2 - Tallest building with antenna */
+.tower-2 {
+    left: 40%;
+    top: 40%;
+    width: 70px;
+    height: 70px;
+}
+
+.tower-2 .front {
+    width: 70px;
+    height: 220px;
+    background: linear-gradient(180deg, var(--building-5) 0%, #0a0a12 100%);
+    transform: translateZ(220px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.tower-2 .side {
+    width: 70px;
+    height: 220px;
+    background: var(--building-5-dark);
+    transform: translateZ(220px) rotateX(-90deg) rotateY(-90deg) translateX(-70px);
+    transform-origin: top left;
+}
+
+.tower-2 .top {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #2d3a42 0%, var(--building-5) 100%);
+    transform: translateZ(220px);
+}
+
+.tower-2 .antenna {
+    position: absolute;
+    width: 4px;
+    height: 40px;
+    background: #666;
+    left: 33px;
+    top: -38px;
+    transform: translateZ(220px);
+}
+
+.tower-2 .antenna::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -3px;
+    width: 10px;
+    height: 10px;
+    background: #ff4444;
+    border-radius: 50%;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.3; }
+}
+
+/* House with pitched roof */
+.house-1 {
+    left: 70%;
+    top: 50%;
+    width: 60px;
+    height: 50px;
+}
+
+.house-1 .front {
+    width: 60px;
+    height: 40px;
+    background: #bbe1fa;
+    transform: translateZ(40px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.house-1 .side {
+    width: 50px;
+    height: 40px;
+    background: #8cc4e8;
+    transform: translateZ(40px) rotateX(-90deg) rotateY(-90deg) translateX(-50px);
+    transform-origin: top left;
+}
+
+.house-1 .roof {
+    width: 70px;
+    height: 55px;
+    background: linear-gradient(135deg, #b8374d 0%, #e94560 50%, #b8374d 100%);
+    transform: translateZ(65px) translateX(-5px) translateY(-2px);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+/* Warehouse */
+.warehouse {
+    left: 5%;
+    top: 70%;
+    width: 120px;
+    height: 80px;
+}
+
+.warehouse .front {
+    width: 120px;
+    height: 60px;
+    background: linear-gradient(180deg, #4a4a5a 0%, #3a3a48 100%);
+    transform: translateZ(60px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.warehouse .side {
+    width: 80px;
+    height: 60px;
+    background: #2d2d3a;
+    transform: translateZ(60px) rotateX(-90deg) rotateY(-90deg) translateX(-80px);
+    transform-origin: top left;
+}
+
+.warehouse .top {
+    width: 120px;
+    height: 80px;
+    background: #5a5a6a;
+    transform: translateZ(60px);
+}
+
+/* Office 2 */
+.office-2 {
+    left: 55%;
+    top: 75%;
+    width: 80px;
+    height: 60px;
+}
+
+.office-2 .front {
+    width: 80px;
+    height: 90px;
+    background: linear-gradient(180deg, var(--building-3) 0%, var(--building-3-dark) 100%);
+    transform: translateZ(90px) rotateX(-90deg);
+    transform-origin: top;
+}
+
+.office-2 .side {
+    width: 60px;
+    height: 90px;
+    background: var(--building-3-dark);
+    transform: translateZ(90px) rotateX(-90deg) rotateY(-90deg) translateX(-60px);
+    transform-origin: top left;
+}
+
+.office-2 .top {
+    width: 80px;
+    height: 60px;
+    background: #4a9fd4;
+    transform: translateZ(90px);
+}
+
+/* Windows pattern overlay */
+.windows {
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 15px,
+            rgba(255, 201, 60, 0.6) 15px,
+            rgba(255, 201, 60, 0.6) 25px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 10px,
+            rgba(255, 201, 60, 0.6) 10px,
+            rgba(255, 201, 60, 0.6) 18px
+        );
+    background-size: 100% 40px, 28px 100%;
+    opacity: 0.7;
+    transform: translateZ(1px);
+    animation: window-flicker 10s infinite;
+}
+
+@keyframes window-flicker {
+    0%, 90%, 100% { opacity: 0.7; }
+    92%, 94% { opacity: 0.5; }
+}
+
+/* Streets */
+.street {
+    position: absolute;
+    background: var(--street);
+    z-index: -1;
+}
+
+.street-h {
+    left: 0;
+    top: 40%;
+    width: 100%;
+    height: 30px;
+    box-shadow: inset 0 10px 0 #3d3d55;
+}
+
+.street-v {
+    left: 30%;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    box-shadow: inset 10px 0 0 #3d3d55;
+}
+
+/* Trees */
+.tree {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--tree);
+    border-radius: 50%;
+    transform: translateZ(30px);
+    box-shadow:
+        5px 5px 0 var(--tree-dark),
+        0 15px 0 #4a3020,
+        0 25px 0 #3a2515;
+}
+
+.tree-1 { left: 25%; top: 25%; }
+.tree-2 { left: 85%; top: 35%; }
+.tree-3 { left: 45%; top: 60%; }
+
+/* Animated car */
+.car {
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    background: #e94560;
+    border-radius: 3px;
+    transform: translateZ(5px);
+    animation: drive 8s linear infinite;
+}
+
+.car::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 15px;
+    height: 8px;
+    background: #b8374d;
+    border-radius: 2px 2px 0 0;
+}
+
+@keyframes drive {
+    0% { left: -10%; top: 42%; }
+    100% { left: 110%; top: 42%; }
+}
+
+/* Content styling */
+.content {
+    max-width: 650px;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--building-4), var(--building-3), var(--building-1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #8899aa;
+    font-style: italic;
+}
+
+.text p {
+    margin-bottom: 1.2rem;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    text-align: justify;
+}
+
+.footer {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #667788;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .city {
+        transform: rotateX(60deg) rotateZ(-45deg) scale(0.7);
+        margin: 0;
+    }
+
+    .scene {
+        padding: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .car {
+        animation: none;
+        left: 50%;
+        top: 42%;
+    }
+
+    .tower-2 .antenna::before {
+        animation: none;
+    }
+
+    .windows {
+        animation: none;
+    }
+}

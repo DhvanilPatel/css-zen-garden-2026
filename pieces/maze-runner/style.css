@@ -1,0 +1,362 @@
+/* Maze Runner - Animated maze with moving dot
+   Showcases: CSS Grid, animations, keyframes path, gradients */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0a0f;
+    --bg-gradient: #12121a;
+    --wall-color: #2a2a3a;
+    --wall-glow: #3d3d5c;
+    --path-color: #0a0a12;
+    --runner-color: #00ff88;
+    --runner-glow: rgba(0, 255, 136, 0.5);
+    --start-color: #00aaff;
+    --end-color: #ff4488;
+    --text-primary: #e0e0e8;
+    --text-secondary: #8888aa;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-gradient) 100%);
+    color: var(--text-primary);
+    line-height: 1.8;
+    min-height: 100vh;
+}
+
+.scene {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+/* Maze container */
+.maze-container {
+    position: relative;
+    margin: 2rem 0;
+}
+
+/* Maze grid - 11x11 */
+.maze {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(20px, 35px));
+    grid-template-rows: repeat(11, minmax(20px, 35px));
+    gap: 2px;
+    background: var(--wall-glow);
+    padding: 2px;
+    border-radius: 4px;
+    box-shadow:
+        0 0 30px rgba(61, 61, 92, 0.5),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s;
+}
+
+.wall {
+    background: linear-gradient(135deg, var(--wall-color) 0%, #1a1a28 100%);
+    box-shadow: inset 1px 1px 2px rgba(255,255,255,0.05);
+}
+
+.path {
+    background: var(--path-color);
+}
+
+.start {
+    background: radial-gradient(circle, var(--start-color) 30%, var(--path-color) 70%);
+    animation: pulse-start 2s ease-in-out infinite;
+}
+
+.end {
+    background: radial-gradient(circle, var(--end-color) 30%, var(--path-color) 70%);
+    animation: pulse-end 2s ease-in-out infinite;
+}
+
+@keyframes pulse-start {
+    0%, 100% { box-shadow: inset 0 0 10px var(--start-color); }
+    50% { box-shadow: inset 0 0 20px var(--start-color); }
+}
+
+@keyframes pulse-end {
+    0%, 100% { box-shadow: inset 0 0 10px var(--end-color); }
+    50% { box-shadow: inset 0 0 20px var(--end-color); }
+}
+
+/* The runner - animated dot */
+.runner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--runner-color);
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px var(--runner-glow),
+        0 0 20px var(--runner-glow),
+        0 0 30px var(--runner-glow);
+    z-index: 10;
+    animation: run-maze 12s ease-in-out infinite;
+}
+
+/* Trail effect */
+.trail {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--runner-color);
+    border-radius: 50%;
+    opacity: 0.4;
+    z-index: 5;
+    animation: run-maze 12s ease-in-out infinite;
+    animation-delay: -0.15s;
+    filter: blur(3px);
+}
+
+/* Maze path animation
+   Grid positions: each cell ~37px (35px + 2px gap)
+   Starting at row 2, col 2 (index 1,1) going to row 10, col 10 (index 9,9)
+*/
+@keyframes run-maze {
+    0% {
+        top: calc(1 * 37px + 12px);
+        left: calc(1 * 37px + 12px);
+    }
+    /* Move right to col 3 */
+    5% {
+        top: calc(1 * 37px + 12px);
+        left: calc(3 * 37px + 12px);
+    }
+    /* Move down to row 4 */
+    12% {
+        top: calc(3 * 37px + 12px);
+        left: calc(3 * 37px + 12px);
+    }
+    /* Move left to col 2 */
+    16% {
+        top: calc(3 * 37px + 12px);
+        left: calc(1 * 37px + 12px);
+    }
+    /* Move down to row 6 */
+    22% {
+        top: calc(5 * 37px + 12px);
+        left: calc(1 * 37px + 12px);
+    }
+    /* Move right to col 6 */
+    32% {
+        top: calc(5 * 37px + 12px);
+        left: calc(5 * 37px + 12px);
+    }
+    /* Move up to row 4 */
+    36% {
+        top: calc(3 * 37px + 12px);
+        left: calc(5 * 37px + 12px);
+    }
+    /* Move right to col 8 */
+    42% {
+        top: calc(3 * 37px + 12px);
+        left: calc(7 * 37px + 12px);
+    }
+    /* Move down to row 8 */
+    52% {
+        top: calc(7 * 37px + 12px);
+        left: calc(7 * 37px + 12px);
+    }
+    /* Move left to col 6 */
+    56% {
+        top: calc(7 * 37px + 12px);
+        left: calc(5 * 37px + 12px);
+    }
+    /* Move down to row 9 */
+    60% {
+        top: calc(8 * 37px + 12px);
+        left: calc(5 * 37px + 12px);
+    }
+    /* Move right to col 10 */
+    75% {
+        top: calc(8 * 37px + 12px);
+        left: calc(9 * 37px + 12px);
+    }
+    /* Move up to row 6 */
+    82% {
+        top: calc(5 * 37px + 12px);
+        left: calc(9 * 37px + 12px);
+    }
+    /* Move down to row 10 - end */
+    92% {
+        top: calc(9 * 37px + 12px);
+        left: calc(9 * 37px + 12px);
+    }
+    /* Stay at end briefly */
+    100% {
+        top: calc(9 * 37px + 12px);
+        left: calc(9 * 37px + 12px);
+    }
+}
+
+/* Content */
+.content {
+    max-width: 600px;
+    text-align: center;
+    padding: 2rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--runner-color);
+    text-shadow:
+        0 0 10px var(--runner-glow),
+        0 0 20px var(--runner-glow);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+}
+
+.text {
+    margin-bottom: 2rem;
+}
+
+.intro {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    margin-bottom: 1.5rem;
+    line-height: 2;
+}
+
+blockquote {
+    font-style: italic;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 3px solid var(--runner-color);
+    background: rgba(0, 255, 136, 0.05);
+    text-align: left;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.text p {
+    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    text-align: justify;
+}
+
+.footer {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .maze {
+        grid-template-columns: repeat(11, 25px);
+        grid-template-rows: repeat(11, 25px);
+    }
+
+    @keyframes run-maze {
+        0% {
+            top: calc(1 * 27px + 8px);
+            left: calc(1 * 27px + 8px);
+        }
+        5% {
+            top: calc(1 * 27px + 8px);
+            left: calc(3 * 27px + 8px);
+        }
+        12% {
+            top: calc(3 * 27px + 8px);
+            left: calc(3 * 27px + 8px);
+        }
+        16% {
+            top: calc(3 * 27px + 8px);
+            left: calc(1 * 27px + 8px);
+        }
+        22% {
+            top: calc(5 * 27px + 8px);
+            left: calc(1 * 27px + 8px);
+        }
+        32% {
+            top: calc(5 * 27px + 8px);
+            left: calc(5 * 27px + 8px);
+        }
+        36% {
+            top: calc(3 * 27px + 8px);
+            left: calc(5 * 27px + 8px);
+        }
+        42% {
+            top: calc(3 * 27px + 8px);
+            left: calc(7 * 27px + 8px);
+        }
+        52% {
+            top: calc(7 * 27px + 8px);
+            left: calc(7 * 27px + 8px);
+        }
+        56% {
+            top: calc(7 * 27px + 8px);
+            left: calc(5 * 27px + 8px);
+        }
+        60% {
+            top: calc(8 * 27px + 8px);
+            left: calc(5 * 27px + 8px);
+        }
+        75% {
+            top: calc(8 * 27px + 8px);
+            left: calc(9 * 27px + 8px);
+        }
+        82% {
+            top: calc(5 * 27px + 8px);
+            left: calc(9 * 27px + 8px);
+        }
+        92%, 100% {
+            top: calc(9 * 27px + 8px);
+            left: calc(9 * 27px + 8px);
+        }
+    }
+
+    .runner {
+        width: 12px;
+        height: 12px;
+    }
+
+    .trail {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .runner, .trail {
+        animation: none;
+        top: calc(5 * 37px + 12px);
+        left: calc(5 * 37px + 12px);
+    }
+
+    .trail {
+        display: none;
+    }
+
+    .start, .end {
+        animation: none;
+    }
+}

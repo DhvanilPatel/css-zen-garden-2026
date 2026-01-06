@@ -1,0 +1,667 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.time-toggle {
+  display: none;
+}
+
+.world {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sky */
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    #87CEEB 0%,
+    #98D8E8 30%,
+    #B0E0E6 60%,
+    #F0E68C 85%,
+    #FFD700 100%
+  );
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .sky {
+  background: linear-gradient(180deg,
+    #0a0a20 0%,
+    #1a1a40 30%,
+    #2d2d60 60%,
+    #3d3d80 85%,
+    #4a4a90 100%
+  );
+}
+
+/* Sun */
+.sun {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, #fff8dc, #ffd700);
+  border-radius: 50%;
+  box-shadow:
+    0 0 60px #ffd700,
+    0 0 100px #ffa500;
+  transition: all 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .sun {
+  transform: translateY(120vh);
+  opacity: 0;
+}
+
+/* Moon */
+.moon {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #fffacd, #f0e68c);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(255, 250, 205, 0.5);
+  transform: translateY(-120vh);
+  opacity: 0;
+  transition: all 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .moon {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.crater {
+  position: absolute;
+  background: rgba(200, 190, 150, 0.5);
+  border-radius: 50%;
+}
+
+.crater-1 { top: 20%; left: 30%; width: 15px; height: 15px; }
+.crater-2 { top: 50%; left: 50%; width: 10px; height: 10px; }
+.crater-3 { top: 35%; left: 60%; width: 8px; height: 8px; }
+
+/* Stars */
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .stars {
+  opacity: 1;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.star:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.star:nth-child(2) { top: 15%; left: 30%; animation-delay: 0.3s; }
+.star:nth-child(3) { top: 8%; left: 50%; animation-delay: 0.6s; }
+.star:nth-child(4) { top: 20%; left: 70%; animation-delay: 0.9s; }
+.star:nth-child(5) { top: 5%; left: 85%; animation-delay: 1.2s; }
+.star:nth-child(6) { top: 25%; left: 15%; animation-delay: 1.5s; }
+.star:nth-child(7) { top: 12%; left: 45%; animation-delay: 1.8s; }
+.star:nth-child(8) { top: 18%; left: 60%; animation-delay: 0.4s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50px;
+  opacity: 0.9;
+  transition: opacity 1.5s ease, background 1.5s ease;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  top: 15%;
+  left: 10%;
+  width: 100px;
+  height: 40px;
+  animation: float-cloud 20s ease-in-out infinite;
+}
+
+.cloud-1::before { width: 50px; height: 50px; top: -20px; left: 15px; }
+.cloud-1::after { width: 40px; height: 40px; top: -15px; left: 50px; }
+
+.cloud-2 {
+  top: 20%;
+  left: 60%;
+  width: 80px;
+  height: 35px;
+  animation: float-cloud 25s ease-in-out infinite reverse;
+}
+
+.cloud-2::before { width: 45px; height: 45px; top: -20px; left: 10px; }
+.cloud-2::after { width: 35px; height: 35px; top: -12px; left: 40px; }
+
+.cloud-3 {
+  top: 25%;
+  left: 35%;
+  width: 120px;
+  height: 45px;
+  animation: float-cloud 30s ease-in-out infinite;
+}
+
+.cloud-3::before { width: 60px; height: 60px; top: -25px; left: 20px; }
+.cloud-3::after { width: 50px; height: 50px; top: -20px; left: 60px; }
+
+.time-toggle:checked ~ .world .cloud {
+  background: #3a3a5a;
+  opacity: 0.4;
+}
+
+@keyframes float-cloud {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(30px); }
+}
+
+/* Mountains */
+.mountains {
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  width: 100%;
+  height: 30%;
+}
+
+.mountain {
+  position: absolute;
+  bottom: 0;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transition: background 1.5s ease;
+}
+
+.mountain-1 {
+  left: -5%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(180deg, #6b8e6b, #4a6b4a);
+}
+
+.mountain-2 {
+  left: 25%;
+  width: 50%;
+  height: 120%;
+  background: linear-gradient(180deg, #5a7d5a, #3a5a3a);
+}
+
+.mountain-3 {
+  right: -5%;
+  width: 45%;
+  height: 90%;
+  background: linear-gradient(180deg, #7a9e7a, #5a7e5a);
+}
+
+.time-toggle:checked ~ .world .mountain-1 {
+  background: linear-gradient(180deg, #2a3a4a, #1a2a3a);
+}
+
+.time-toggle:checked ~ .world .mountain-2 {
+  background: linear-gradient(180deg, #1f2f3f, #0f1f2f);
+}
+
+.time-toggle:checked ~ .world .mountain-3 {
+  background: linear-gradient(180deg, #2f3f4f, #1f2f3f);
+}
+
+/* Hills */
+.hills {
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  width: 100%;
+  height: 20%;
+}
+
+.hill {
+  position: absolute;
+  bottom: 0;
+  border-radius: 100% 100% 0 0;
+  transition: background 1.5s ease;
+}
+
+.hill-1 {
+  left: -10%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(180deg, #8fbc8f, #6b8e6b);
+}
+
+.hill-2 {
+  right: -10%;
+  width: 55%;
+  height: 80%;
+  background: linear-gradient(180deg, #98d098, #7ab87a);
+}
+
+.time-toggle:checked ~ .world .hill-1 {
+  background: linear-gradient(180deg, #2a4a3a, #1a3a2a);
+}
+
+.time-toggle:checked ~ .world .hill-2 {
+  background: linear-gradient(180deg, #3a5a4a, #2a4a3a);
+}
+
+/* Forest */
+.forest {
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  width: 100%;
+  height: 25%;
+}
+
+.tree {
+  position: absolute;
+  bottom: 0;
+}
+
+.trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #5a3d2b;
+  border-radius: 3px;
+  transition: background 1.5s ease;
+}
+
+.foliage {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 45% 45%;
+  transition: background 1.5s ease;
+}
+
+.tree-1 { left: 5%; }
+.tree-1 .trunk { width: 10px; height: 40px; }
+.tree-1 .foliage { bottom: 30px; width: 50px; height: 60px; background: #2d6b2d; }
+
+.tree-2 { left: 15%; }
+.tree-2 .trunk { width: 8px; height: 30px; }
+.tree-2 .foliage { bottom: 22px; width: 40px; height: 50px; background: #3d8b3d; }
+
+.tree-3 { left: 75%; }
+.tree-3 .trunk { width: 12px; height: 50px; }
+.tree-3 .foliage { bottom: 38px; width: 60px; height: 70px; background: #2d7b2d; }
+
+.tree-4 { left: 85%; }
+.tree-4 .trunk { width: 9px; height: 35px; }
+.tree-4 .foliage { bottom: 27px; width: 45px; height: 55px; background: #3d9b3d; }
+
+.tree-5 { left: 92%; }
+.tree-5 .trunk { width: 7px; height: 25px; }
+.tree-5 .foliage { bottom: 18px; width: 35px; height: 45px; background: #4dab4d; }
+
+.time-toggle:checked ~ .world .trunk {
+  background: #2a1a10;
+}
+
+.time-toggle:checked ~ .world .tree-1 .foliage { background: #0d2b0d; }
+.time-toggle:checked ~ .world .tree-2 .foliage { background: #1d3b1d; }
+.time-toggle:checked ~ .world .tree-3 .foliage { background: #0d3b0d; }
+.time-toggle:checked ~ .world .tree-4 .foliage { background: #1d4b1d; }
+.time-toggle:checked ~ .world .tree-5 .foliage { background: #2d5b2d; }
+
+/* House */
+.house {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 100px;
+}
+
+.roof {
+  position: absolute;
+  top: 0;
+  left: -15px;
+  width: 150px;
+  height: 50px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .roof {
+  background: linear-gradient(135deg, #3a2010, #4a3020);
+}
+
+.walls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  height: 55px;
+  background: #f5deb3;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .walls {
+  background: #3a3a4a;
+}
+
+.window {
+  width: 25px;
+  height: 30px;
+  background: #87ceeb;
+  border: 3px solid #5a3d2b;
+  position: relative;
+  transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .window {
+  background: #1a1a2a;
+  border-color: #2a1a10;
+}
+
+.light {
+  position: absolute;
+  inset: 0;
+  background: #ffd700;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .light {
+  opacity: 1;
+  animation: flicker 3s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+  75% { opacity: 0.85; }
+}
+
+.door {
+  width: 25px;
+  height: 40px;
+  background: #5a3d2b;
+  border-radius: 3px 3px 0 0;
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .door {
+  background: #2a1a10;
+}
+
+.chimney {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  width: 20px;
+  height: 30px;
+  background: #8b4513;
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .chimney {
+  background: #3a2010;
+}
+
+.smoke {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.puff {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: rgba(200, 200, 200, 0.6);
+  border-radius: 50%;
+  animation: rise 3s ease-out infinite;
+}
+
+.puff-1 { animation-delay: 0s; }
+.puff-2 { animation-delay: 1s; }
+.puff-3 { animation-delay: 2s; }
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-50px) scale(2); opacity: 0; }
+}
+
+/* Ground */
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+}
+
+.grass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #7ccd7c, #5aad5a);
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .grass {
+  background: linear-gradient(180deg, #1a3a1a, #0a2a0a);
+}
+
+.path {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 60%;
+  background: linear-gradient(180deg, #c4a76c, #a08050);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+  transition: background 1.5s ease;
+}
+
+.time-toggle:checked ~ .world .path {
+  background: linear-gradient(180deg, #4a3a2a, #3a2a1a);
+}
+
+/* Toggle button */
+.toggle-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+  z-index: 100;
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.toggle-icon {
+  font-size: 1.5rem;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.night-icon {
+  position: absolute;
+  left: 20px;
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.time-toggle:checked ~ .world .day-icon {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.time-toggle:checked ~ .world .night-icon {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+.toggle-text {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  margin-left: 25px;
+}
+
+/* Story text */
+.story {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 600px;
+  padding: 20px 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background 0.5s ease;
+}
+
+.time-toggle:checked ~ .world .story {
+  background: rgba(30, 30, 50, 0.9);
+}
+
+.story p {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  transition: color 0.5s ease;
+}
+
+.time-toggle:checked ~ .world .story p {
+  color: #e8e8e8;
+}
+
+.day-text {
+  display: block;
+}
+
+.night-text {
+  display: none;
+}
+
+.time-toggle:checked ~ .world .day-text {
+  display: none;
+}
+
+.time-toggle:checked ~ .world .night-text {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sun, .moon {
+    width: 60px;
+    height: 60px;
+    top: 5%;
+    right: 10%;
+  }
+
+  .moon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .house {
+    width: 80px;
+    height: 70px;
+  }
+
+  .roof {
+    width: 110px;
+    height: 35px;
+    left: -15px;
+  }
+
+  .walls {
+    width: 80px;
+    height: 40px;
+  }
+
+  .window {
+    width: 18px;
+    height: 22px;
+  }
+
+  .door {
+    width: 18px;
+    height: 30px;
+  }
+
+  .story {
+    max-width: 90%;
+    padding: 15px 20px;
+    bottom: 10px;
+  }
+
+  .story p {
+    font-size: 0.9rem;
+  }
+
+  .toggle-button {
+    padding: 8px 15px;
+  }
+
+  .toggle-text {
+    display: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .star, .cloud, .puff {
+    animation: none;
+  }
+
+  .light {
+    animation: none;
+  }
+}
