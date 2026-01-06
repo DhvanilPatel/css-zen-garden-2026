@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether OS - Glass Morphism Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-layer"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="dashboard">
+    <header class="glass-header">
+      <div class="logo">
+        <span class="logo-icon">◇</span>
+        <span class="logo-text">Aether OS</span>
+      </div>
+      <nav class="header-nav">
+        <span class="nav-item active">Dashboard</span>
+        <span class="nav-item">Apps</span>
+        <span class="nav-item">Settings</span>
+      </nav>
+      <div class="header-actions">
+        <span class="action-icon">◐</span>
+        <span class="action-icon">⚡</span>
+        <div class="avatar"></div>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <!-- Weather Widget -->
+      <section class="glass-card weather-card">
+        <div class="card-header">
+          <h2>Weather</h2>
+          <span class="location">Neo Tokyo</span>
+        </div>
+        <div class="weather-content">
+          <div class="weather-main">
+            <span class="weather-icon">☀</span>
+            <span class="temperature">23°</span>
+          </div>
+          <p class="weather-desc">Clear skies with gentle breeze</p>
+          <div class="weather-details">
+            <div class="detail">
+              <span class="detail-label">Humidity</span>
+              <span class="detail-value">45%</span>
+            </div>
+            <div class="detail">
+              <span class="detail-label">Wind</span>
+              <span class="detail-value">12 km/h</span>
+            </div>
+            <div class="detail">
+              <span class="detail-label">UV Index</span>
+              <span class="detail-value">Low</span>
+            </div>
+          </div>
+        </div>
+        <div class="forecast">
+          <div class="forecast-day">
+            <span class="day">Mon</span>
+            <span class="forecast-icon">☀</span>
+            <span class="forecast-temp">24°</span>
+          </div>
+          <div class="forecast-day">
+            <span class="day">Tue</span>
+            <span class="forecast-icon">⛅</span>
+            <span class="forecast-temp">22°</span>
+          </div>
+          <div class="forecast-day">
+            <span class="day">Wed</span>
+            <span class="forecast-icon">☁</span>
+            <span class="forecast-temp">19°</span>
+          </div>
+          <div class="forecast-day">
+            <span class="day">Thu</span>
+            <span class="forecast-icon">🌧</span>
+            <span class="forecast-temp">17°</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Music Player -->
+      <section class="glass-card music-card">
+        <div class="card-header">
+          <h2>Now Playing</h2>
+          <span class="source">Aether Music</span>
+        </div>
+        <div class="album-art">
+          <div class="album-visual">
+            <div class="album-ring"></div>
+            <div class="album-ring"></div>
+            <div class="album-ring"></div>
+            <div class="album-center"></div>
+          </div>
+        </div>
+        <div class="track-info">
+          <h3 class="track-title">Crystalline Dreams</h3>
+          <p class="track-artist">Luna Synthesis</p>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-time">
+            <span>2:34</span>
+            <span>4:21</span>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="control-btn">⟲</button>
+          <button class="control-btn">◀◀</button>
+          <button class="control-btn play-btn">▶</button>
+          <button class="control-btn">▶▶</button>
+          <button class="control-btn">⟳</button>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section class="glass-card notifications-card">
+        <div class="card-header">
+          <h2>Notifications</h2>
+          <span class="badge">4 new</span>
+        </div>
+        <div class="notifications-list">
+          <div class="notification unread">
+            <div class="notif-icon system">⚙</div>
+            <div class="notif-content">
+              <p class="notif-title">System Update Available</p>
+              <p class="notif-desc">Aether OS 3.2 brings new glass effects and performance improvements.</p>
+              <span class="notif-time">2 minutes ago</span>
+            </div>
+          </div>
+          <div class="notification unread">
+            <div class="notif-icon message">✉</div>
+            <div class="notif-content">
+              <p class="notif-title">New Message from Kai</p>
+              <p class="notif-desc">Hey, did you see the new holographic display settings?</p>
+              <span class="notif-time">15 minutes ago</span>
+            </div>
+          </div>
+          <div class="notification unread">
+            <div class="notif-icon calendar">◈</div>
+            <div class="notif-content">
+              <p class="notif-title">Meeting in 30 minutes</p>
+              <p class="notif-desc">Design Review: Project Aurora interface concepts.</p>
+              <span class="notif-time">30 minutes ago</span>
+            </div>
+          </div>
+          <div class="notification">
+            <div class="notif-icon achievement">★</div>
+            <div class="notif-content">
+              <p class="notif-title">Achievement Unlocked</p>
+              <p class="notif-desc">You've customized 100 glass panels. Transparency Master!</p>
+              <span class="notif-time">2 hours ago</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Stats -->
+      <section class="glass-card stats-card">
+        <div class="card-header">
+          <h2>System Status</h2>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-circle">
+              <svg viewBox="0 0 36 36">
+                <circle class="stat-bg" cx="18" cy="18" r="16"/>
+                <circle class="stat-fill cpu" cx="18" cy="18" r="16"/>
+              </svg>
+              <span class="stat-value">67%</span>
+            </div>
+            <span class="stat-label">CPU</span>
+          </div>
+          <div class="stat-item">
+            <div class="stat-circle">
+              <svg viewBox="0 0 36 36">
+                <circle class="stat-bg" cx="18" cy="18" r="16"/>
+                <circle class="stat-fill memory" cx="18" cy="18" r="16"/>
+              </svg>
+              <span class="stat-value">4.2GB</span>
+            </div>
+            <span class="stat-label">Memory</span>
+          </div>
+          <div class="stat-item">
+            <div class="stat-circle">
+              <svg viewBox="0 0 36 36">
+                <circle class="stat-bg" cx="18" cy="18" r="16"/>
+                <circle class="stat-fill storage" cx="18" cy="18" r="16"/>
+              </svg>
+              <span class="stat-value">234GB</span>
+            </div>
+            <span class="stat-label">Storage</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="glass-card actions-card">
+        <div class="card-header">
+          <h2>Quick Actions</h2>
+        </div>
+        <div class="actions-grid">
+          <button class="action-btn">
+            <span class="action-emoji">📁</span>
+            <span>Files</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-emoji">🎨</span>
+            <span>Design</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-emoji">📊</span>
+            <span>Analytics</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-emoji">⚡</span>
+            <span>Power</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="glass-footer">
+      <p>Aether OS v3.1.4 — Designed for clarity, built for dreams</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,823 @@
+/* CSS Zen Garden: Floating Islands of Aerethia
+   Showcases: 3D Transforms, Parallax Scrolling, Floating Animations */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sky-top: #0a1628;
+  --sky-mid: #1a3a5c;
+  --sky-bottom: #4a7c9b;
+  --cloud-color: rgba(255, 255, 255, 0.3);
+  --island-top: #4a7c59;
+  --island-grass: #5d9b6b;
+  --island-rock: #8b7355;
+  --island-bottom: #5c4a3a;
+  --island-shadow: rgba(0, 0, 0, 0.3);
+  --text-light: #f0f4f8;
+  --text-shadow: rgba(0, 0, 0, 0.5);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  min-height: 300vh;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-bottom) 100%);
+}
+
+/* Main sky container with perspective */
+.sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: cloud-drift linear infinite;
+}
+
+.cloud-1 {
+  width: 300px;
+  height: 80px;
+  top: 10%;
+  left: -300px;
+  animation-duration: 60s;
+}
+
+.cloud-2 {
+  width: 200px;
+  height: 60px;
+  top: 25%;
+  left: -200px;
+  animation-duration: 45s;
+  animation-delay: -20s;
+}
+
+.cloud-3 {
+  width: 400px;
+  height: 100px;
+  top: 40%;
+  left: -400px;
+  animation-duration: 80s;
+  animation-delay: -40s;
+}
+
+.cloud-4 {
+  width: 250px;
+  height: 70px;
+  top: 60%;
+  left: -250px;
+  animation-duration: 55s;
+  animation-delay: -10s;
+}
+
+.cloud-5 {
+  width: 350px;
+  height: 90px;
+  top: 75%;
+  left: -350px;
+  animation-duration: 70s;
+  animation-delay: -30s;
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 400px)); }
+}
+
+/* Parallax container */
+.parallax-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Parallax layers at different Z depths */
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.layer-far {
+  transform: translateZ(-400px) scale(1.4);
+  opacity: 0.5;
+}
+
+.layer-mid {
+  transform: translateZ(-200px) scale(1.2);
+  opacity: 0.75;
+}
+
+.layer-near {
+  transform: translateZ(0px) scale(1);
+}
+
+.layer-closest {
+  transform: translateZ(100px) scale(0.9);
+  pointer-events: none;
+}
+
+/* Base island styles */
+.island {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: float ease-in-out infinite;
+}
+
+.island-body {
+  position: absolute;
+  background: linear-gradient(180deg, var(--island-grass) 0%, var(--island-top) 30%, var(--island-rock) 100%);
+  border-radius: 50% 50% 45% 45% / 30% 30% 70% 70%;
+  box-shadow:
+    0 20px 40px var(--island-shadow),
+    inset 0 -10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.island-bottom {
+  position: absolute;
+  background: linear-gradient(180deg, var(--island-rock) 0%, var(--island-bottom) 60%, #3a2a1a 100%);
+  clip-path: polygon(10% 0%, 90% 0%, 70% 100%, 30% 100%);
+}
+
+.island-grass {
+  position: absolute;
+  top: -5px;
+  left: 10%;
+  width: 80%;
+  height: 15px;
+  background: var(--island-grass);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+/* Individual island positioning and sizes */
+.island-1 {
+  top: 20%;
+  left: 10%;
+  animation-duration: 8s;
+  animation-delay: -2s;
+}
+
+.island-1 .island-body {
+  width: 120px;
+  height: 60px;
+}
+
+.island-1 .island-bottom {
+  top: 55px;
+  left: 15px;
+  width: 90px;
+  height: 80px;
+}
+
+.island-2 {
+  top: 35%;
+  right: 15%;
+  animation-duration: 10s;
+  animation-delay: -5s;
+}
+
+.island-2 .island-body {
+  width: 80px;
+  height: 40px;
+}
+
+.island-2 .island-bottom {
+  top: 35px;
+  left: 10px;
+  width: 60px;
+  height: 50px;
+}
+
+.island-3 {
+  top: 25%;
+  left: 5%;
+  animation-duration: 7s;
+  animation-delay: -1s;
+}
+
+.island-3 .island-body {
+  width: 200px;
+  height: 90px;
+}
+
+.island-3 .island-bottom {
+  top: 80px;
+  left: 30px;
+  width: 140px;
+  height: 120px;
+}
+
+.island-4 {
+  top: 50%;
+  right: 10%;
+  animation-duration: 9s;
+  animation-delay: -4s;
+}
+
+.island-4 .island-body {
+  width: 150px;
+  height: 70px;
+}
+
+.island-4 .island-bottom {
+  top: 65px;
+  left: 20px;
+  width: 110px;
+  height: 90px;
+}
+
+.island-main {
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-duration: 6s;
+}
+
+.island-main .island-body {
+  width: 350px;
+  height: 150px;
+  transform: rotateX(10deg);
+}
+
+.island-main .island-bottom {
+  top: 140px;
+  left: 50px;
+  width: 250px;
+  height: 180px;
+}
+
+.island-5 {
+  top: 60%;
+  left: 15%;
+  animation-duration: 8s;
+  animation-delay: -3s;
+}
+
+.island-5 .island-body {
+  width: 140px;
+  height: 65px;
+}
+
+.island-5 .island-bottom {
+  top: 60px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateX(5deg) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotateX(7deg) rotateY(2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(3deg) rotateY(-1deg);
+  }
+  75% {
+    transform: translateY(-20px) rotateX(6deg) rotateY(-2deg);
+  }
+}
+
+.island-main {
+  animation-name: float-main;
+}
+
+@keyframes float-main {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotateX(8deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-25px) rotateX(5deg) rotateY(3deg);
+  }
+}
+
+/* Structures */
+.castle {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+}
+
+.tower {
+  width: 20px;
+  height: 40px;
+  background: linear-gradient(180deg, #8e7cc3 0%, #674ea7 100%);
+  position: relative;
+}
+
+.tower::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -5px;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 20px solid #5b3f8f;
+}
+
+.tower-main {
+  width: 30px;
+  height: 60px;
+}
+
+.tower-main::before {
+  left: -7px;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 25px solid #5b3f8f;
+}
+
+.village {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.house {
+  width: 30px;
+  height: 25px;
+  background: linear-gradient(180deg, #d4a373 0%, #bc8a5f 100%);
+  position: relative;
+}
+
+.house::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: -5px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #a0522d;
+}
+
+.house-tall {
+  width: 35px;
+  height: 35px;
+}
+
+.house-tall::before {
+  left: -7px;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+}
+
+/* Lighthouse */
+.lighthouse {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lighthouse-body {
+  width: 25px;
+  height: 60px;
+  background: linear-gradient(90deg, #fff 0%, #fff 50%, #e63946 50%, #e63946 100%);
+  background-size: 10px 100%;
+  clip-path: polygon(15% 100%, 85% 100%, 70% 0%, 30% 0%);
+}
+
+.lighthouse-top {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 15px;
+  background: #333;
+  border-radius: 5px 5px 0 0;
+}
+
+.lighthouse-light {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 230, 150, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: lighthouse-glow 2s ease-in-out infinite;
+}
+
+@keyframes lighthouse-glow {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+}
+
+/* Trees */
+.trees {
+  position: absolute;
+  top: -30px;
+  left: 20%;
+  display: flex;
+  gap: 10px;
+}
+
+.tree {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 35px solid #2d5a27;
+  position: relative;
+}
+
+.tree::before {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -4px;
+  width: 8px;
+  height: 12px;
+  background: #5c4033;
+}
+
+.tree-large {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 50px solid #1e4d2b;
+}
+
+.tree-large::before {
+  bottom: -55px;
+  left: -5px;
+  width: 10px;
+  height: 15px;
+}
+
+/* Waterfall */
+.waterfall {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  width: 15px;
+  height: 120px;
+  background: linear-gradient(180deg,
+    rgba(150, 200, 255, 0.9) 0%,
+    rgba(150, 200, 255, 0.6) 50%,
+    rgba(150, 200, 255, 0.3) 100%);
+  border-radius: 5px;
+  animation: waterfall-flow 0.5s linear infinite;
+}
+
+.waterfall::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: -10px;
+  width: 35px;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(150, 200, 255, 0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: splash 1s ease-in-out infinite;
+}
+
+@keyframes waterfall-flow {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 20px; }
+}
+
+@keyframes splash {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Floating rocks */
+.floating-rock {
+  position: absolute;
+  background: linear-gradient(135deg, #6b5344 0%, #4a3a2e 100%);
+  border-radius: 30% 70% 50% 50%;
+  animation: rock-float ease-in-out infinite;
+}
+
+.rock-1 {
+  width: 40px;
+  height: 30px;
+  top: 70%;
+  left: 5%;
+  animation-duration: 5s;
+}
+
+.rock-2 {
+  width: 25px;
+  height: 20px;
+  top: 20%;
+  right: 8%;
+  animation-duration: 4s;
+  animation-delay: -2s;
+}
+
+.rock-3 {
+  width: 35px;
+  height: 25px;
+  top: 85%;
+  right: 20%;
+  animation-duration: 6s;
+  animation-delay: -1s;
+}
+
+@keyframes rock-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(10deg); }
+}
+
+/* Birds */
+.bird {
+  position: absolute;
+  width: 20px;
+  height: 5px;
+  background: transparent;
+}
+
+.bird::before,
+.bird::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 3px;
+  background: #1a1a2e;
+  border-radius: 50%;
+}
+
+.bird::before {
+  left: 0;
+  transform-origin: right center;
+  animation: wing-flap 0.4s ease-in-out infinite;
+}
+
+.bird::after {
+  right: 0;
+  transform-origin: left center;
+  animation: wing-flap 0.4s ease-in-out infinite reverse;
+}
+
+.bird-1 {
+  top: 15%;
+  left: 20%;
+  animation: bird-fly 15s linear infinite;
+}
+
+.bird-2 {
+  top: 30%;
+  left: -5%;
+  animation: bird-fly 20s linear infinite;
+  animation-delay: -8s;
+}
+
+.bird-3 {
+  top: 45%;
+  left: 10%;
+  animation: bird-fly 18s linear infinite;
+  animation-delay: -4s;
+}
+
+@keyframes wing-flap {
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+}
+
+@keyframes bird-fly {
+  from { transform: translateX(0); }
+  to { transform: translateX(120vw); }
+}
+
+/* Island content / text */
+.island-content {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--text-light);
+  text-shadow: 2px 2px 4px var(--text-shadow);
+  width: max-content;
+  max-width: 280px;
+}
+
+.main-content {
+  top: 30px;
+  max-width: 320px;
+}
+
+.island-content h1 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.island-content h2 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.island-content h3 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.island-content p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-light);
+  text-align: center;
+  opacity: 0.7;
+  animation: hint-pulse 2s ease-in-out infinite;
+}
+
+.scroll-hint span {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  margin: 10px auto 0;
+  border-right: 2px solid var(--text-light);
+  border-bottom: 2px solid var(--text-light);
+  transform: rotate(45deg);
+  animation: arrow-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes arrow-bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(5px); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .island-main .island-body {
+    width: 250px;
+    height: 110px;
+  }
+
+  .island-main .island-bottom {
+    top: 100px;
+    left: 30px;
+    width: 190px;
+    height: 140px;
+  }
+
+  .island-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .main-content {
+    max-width: 230px;
+  }
+
+  .island-content p {
+    font-size: 0.75rem;
+  }
+
+  .island-3,
+  .island-4 {
+    display: none;
+  }
+
+  .village {
+    gap: 8px;
+  }
+
+  .house {
+    width: 22px;
+    height: 18px;
+  }
+
+  .house::before {
+    top: -14px;
+    left: -4px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid #a0522d;
+  }
+
+  .house-tall {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .island-main .island-body {
+    width: 180px;
+    height: 80px;
+  }
+
+  .island-main .island-bottom {
+    top: 70px;
+    left: 20px;
+    width: 140px;
+    height: 100px;
+  }
+
+  .island-content h1 {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
+
+  .main-content {
+    max-width: 170px;
+  }
+
+  .island-content p {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .island-5 .island-content {
+    display: none;
+  }
+
+  .layer-far {
+    opacity: 0.3;
+  }
+
+  .cloud {
+    filter: blur(15px);
+    opacity: 0.5;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .island,
+  .cloud,
+  .floating-rock,
+  .bird,
+  .lighthouse-light,
+  .waterfall,
+  .scroll-arrow,
+  .scroll-hint {
+    animation: none;
+  }
+
+  .bird::before,
+  .bird::after {
+    animation: none;
+  }
+}

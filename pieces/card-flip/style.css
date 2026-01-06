@@ -1,0 +1,453 @@
+/* === Base Reset & Variables === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --text-primary: #e8e6e3;
+  --text-secondary: #9a9a9a;
+  --accent-gold: #d4af37;
+  --accent-silver: #c0c0c0;
+
+  /* Creature colors */
+  --dragon-color: #ff4500;
+  --phoenix-color: #ff8c00;
+  --unicorn-color: #e0b0ff;
+  --griffin-color: #cd853f;
+  --kraken-color: #1e90ff;
+  --cerberus-color: #8b0000;
+  --mermaid-color: #20b2aa;
+  --basilisk-color: #228b22;
+
+  /* Rarity colors */
+  --rarity-uncommon: #1eff00;
+  --rarity-rare: #0070dd;
+  --rarity-legendary: #ff8000;
+  --rarity-mythic: #e268a8;
+}
+
+body {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* === Layout === */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* === Gallery Grid === */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+  perspective: 1000px;
+}
+
+/* === Card Structure === */
+.card {
+  height: 420px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card:hover .card-inner,
+.card:focus-within .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* === Card Front === */
+.card-front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+.card-front h2 {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 1.4rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* === Silhouettes === */
+.silhouette {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  filter: drop-shadow(0 0 20px currentColor);
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .silhouette {
+  transform: scale(1.05);
+}
+
+/* Dragon Silhouette */
+.dragon {
+  color: var(--dragon-color);
+}
+.dragon .silhouette {
+  background: var(--dragon-color);
+  clip-path: polygon(
+    50% 0%, 60% 15%, 80% 10%, 70% 25%, 95% 30%,
+    75% 40%, 85% 55%, 65% 50%, 70% 70%, 55% 60%,
+    50% 100%, 45% 60%, 30% 70%, 35% 50%, 15% 55%,
+    25% 40%, 5% 30%, 30% 25%, 20% 10%, 40% 15%
+  );
+}
+
+/* Phoenix Silhouette */
+.phoenix {
+  color: var(--phoenix-color);
+}
+.phoenix .silhouette {
+  background: linear-gradient(135deg, #ff4500, #ffd700, #ff6347);
+  clip-path: polygon(
+    50% 0%, 55% 20%, 75% 15%, 60% 30%, 90% 25%,
+    65% 40%, 85% 50%, 60% 55%, 70% 75%, 55% 65%,
+    50% 100%, 45% 65%, 30% 75%, 40% 55%, 15% 50%,
+    35% 40%, 10% 25%, 40% 30%, 25% 15%, 45% 20%
+  );
+  animation: phoenixGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes phoenixGlow {
+  from { filter: drop-shadow(0 0 20px var(--phoenix-color)) brightness(1); }
+  to { filter: drop-shadow(0 0 40px #ffd700) brightness(1.2); }
+}
+
+/* Unicorn Silhouette */
+.unicorn {
+  color: var(--unicorn-color);
+}
+.unicorn .silhouette {
+  background: linear-gradient(180deg, #fff, var(--unicorn-color));
+  clip-path: polygon(
+    50% 0%, 52% 15%, 55% 12%, 53% 25%, 70% 25%,
+    65% 35%, 80% 40%, 70% 50%, 75% 60%, 65% 65%,
+    70% 100%, 55% 85%, 50% 100%, 45% 85%, 30% 100%,
+    35% 65%, 25% 60%, 30% 50%, 20% 40%, 35% 35%,
+    30% 25%, 47% 25%, 45% 12%, 48% 15%
+  );
+}
+
+/* Griffin Silhouette */
+.griffin {
+  color: var(--griffin-color);
+}
+.griffin .silhouette {
+  background: var(--griffin-color);
+  clip-path: polygon(
+    45% 0%, 55% 5%, 65% 0%, 60% 15%, 85% 20%,
+    75% 30%, 100% 40%, 80% 45%, 85% 60%, 70% 55%,
+    75% 100%, 55% 75%, 50% 100%, 45% 75%, 25% 100%,
+    30% 55%, 15% 60%, 20% 45%, 0% 40%, 25% 30%,
+    15% 20%, 40% 15%, 35% 0%
+  );
+}
+
+/* Kraken Silhouette */
+.kraken {
+  color: var(--kraken-color);
+}
+.kraken .silhouette {
+  background: linear-gradient(180deg, var(--kraken-color), #000080);
+  clip-path: polygon(
+    50% 5%, 65% 20%, 55% 35%, 75% 30%, 60% 45%,
+    85% 50%, 70% 60%, 95% 70%, 75% 75%, 80% 95%,
+    60% 80%, 50% 100%, 40% 80%, 20% 95%, 25% 75%,
+    5% 70%, 30% 60%, 15% 50%, 40% 45%, 25% 30%,
+    45% 35%, 35% 20%
+  );
+  animation: krakenPulse 3s ease-in-out infinite;
+}
+
+@keyframes krakenPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* Cerberus Silhouette */
+.cerberus {
+  color: var(--cerberus-color);
+}
+.cerberus .silhouette {
+  background: var(--cerberus-color);
+  clip-path: polygon(
+    20% 0%, 30% 15%, 35% 5%, 45% 20%, 50% 5%,
+    55% 20%, 65% 5%, 70% 15%, 80% 0%, 75% 25%,
+    90% 35%, 80% 45%, 85% 60%, 70% 55%, 75% 100%,
+    50% 80%, 25% 100%, 30% 55%, 15% 60%, 20% 45%,
+    10% 35%, 25% 25%
+  );
+}
+
+/* Mermaid/Siren Silhouette */
+.mermaid {
+  color: var(--mermaid-color);
+}
+.mermaid .silhouette {
+  background: linear-gradient(180deg, var(--mermaid-color), #008b8b);
+  clip-path: polygon(
+    50% 0%, 55% 10%, 60% 8%, 58% 20%, 55% 25%,
+    60% 35%, 58% 45%, 65% 55%, 75% 60%, 85% 70%,
+    70% 75%, 80% 85%, 60% 80%, 55% 100%, 45% 100%,
+    40% 80%, 20% 85%, 30% 75%, 15% 70%, 25% 60%,
+    35% 55%, 42% 45%, 40% 35%, 45% 25%, 42% 20%,
+    40% 8%, 45% 10%
+  );
+}
+
+/* Basilisk Silhouette */
+.basilisk {
+  color: var(--basilisk-color);
+}
+.basilisk .silhouette {
+  background: var(--basilisk-color);
+  clip-path: polygon(
+    15% 15%, 25% 10%, 35% 15%, 40% 5%, 50% 15%,
+    55% 10%, 60% 20%, 75% 25%, 70% 35%, 85% 40%,
+    80% 50%, 95% 55%, 85% 60%, 90% 70%, 75% 65%,
+    80% 80%, 60% 70%, 55% 85%, 45% 75%, 40% 90%,
+    35% 80%, 25% 95%, 30% 75%, 15% 70%, 25% 60%,
+    10% 50%, 20% 45%, 5% 35%, 20% 30%
+  );
+}
+
+/* === Card Back === */
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(145deg, var(--bg-secondary) 0%, #1a1a25 100%);
+  border: 2px solid var(--accent-gold);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+.card-back h3 {
+  font-size: 1.3rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: var(--text-secondary);
+}
+
+.card-back p {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.rarity {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.rarity.uncommon {
+  color: var(--rarity-uncommon);
+  border: 1px solid var(--rarity-uncommon);
+  box-shadow: 0 0 10px rgba(30, 255, 0, 0.3);
+}
+
+.rarity.rare {
+  color: var(--rarity-rare);
+  border: 1px solid var(--rarity-rare);
+  box-shadow: 0 0 10px rgba(0, 112, 221, 0.3);
+}
+
+.rarity.legendary {
+  color: var(--rarity-legendary);
+  border: 1px solid var(--rarity-legendary);
+  box-shadow: 0 0 10px rgba(255, 128, 0, 0.3);
+}
+
+.rarity.mythic {
+  color: var(--rarity-mythic);
+  border: 1px solid var(--rarity-mythic);
+  box-shadow: 0 0 10px rgba(226, 104, 168, 0.3);
+  animation: mythicPulse 2s ease-in-out infinite;
+}
+
+@keyframes mythicPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(226, 104, 168, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(226, 104, 168, 0.6); }
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.75rem;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    height: 380px;
+  }
+
+  .silhouette {
+    width: 140px;
+    height: 140px;
+  }
+
+  .card-back {
+    padding: 1.25rem;
+  }
+
+  .card-back p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .card {
+    height: 400px;
+  }
+}
+
+/* === Touch Device Support === */
+@media (hover: none) {
+  .card {
+    perspective: 1000px;
+  }
+
+  .card-inner {
+    transition: transform 0.6s;
+  }
+
+  .card:active .card-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  .card-inner {
+    transition: none;
+  }
+
+  .silhouette,
+  .rarity.mythic {
+    animation: none;
+  }
+
+  .phoenix .silhouette,
+  .kraken .silhouette {
+    animation: none;
+  }
+}
+
+/* === Focus Styles for Accessibility === */
+.card:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 4px;
+}

@@ -1,0 +1,931 @@
+/* ============================================
+   Journey of a Star - Scroll-Driven Animation
+   A CSS Zen Garden Piece
+   ============================================ */
+
+/* Custom Properties */
+:root {
+  --void-black: #0a0a0f;
+  --nebula-purple: #4a1a6b;
+  --nebula-pink: #d63384;
+  --nebula-blue: #0d6efd;
+  --star-white: #fff8e7;
+  --star-yellow: #ffd43b;
+  --star-orange: #fd7e14;
+  --star-red: #dc3545;
+  --supernova-gold: #ffc107;
+  --remnant-teal: #20c997;
+  --remnant-blue: #6f42c1;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--void-black);
+  color: var(--star-white);
+  overflow-x: hidden;
+}
+
+/* Scroll Container with Snap */
+.scroll-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Scene Base */
+.scene {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.content h2 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.content p {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.8;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* ============================================
+   Section 1: The Void (Intro)
+   ============================================ */
+.void {
+  background: radial-gradient(ellipse at center, #0f0f1a 0%, var(--void-black) 100%);
+}
+
+.void .title {
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  font-weight: 100;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--star-white), var(--nebula-blue), var(--nebula-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+.void .subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  opacity: 0.6;
+  letter-spacing: 0.2em;
+  margin-bottom: 3rem;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: bounce 2s infinite;
+}
+
+.arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--star-white);
+  border-bottom: 2px solid var(--star-white);
+  transform: rotate(45deg);
+  opacity: 0.3;
+}
+
+.arrow:nth-child(1) { animation: arrowFade 2s infinite 0s; }
+.arrow:nth-child(2) { animation: arrowFade 2s infinite 0.2s; }
+.arrow:nth-child(3) { animation: arrowFade 2s infinite 0.4s; }
+
+@keyframes arrowFade {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Stars Background */
+.stars-background {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, white, transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1px 1px at 230px 80px, white, transparent),
+    radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 350px 200px, white, transparent);
+  background-size: 400px 300px;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   Section 2: Nebula Birth
+   ============================================ */
+.nebula {
+  background: linear-gradient(180deg, var(--void-black) 0%, #1a0a2e 50%, var(--void-black) 100%);
+}
+
+.nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0;
+  animation: nebulaReveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50%;
+}
+
+.cloud-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--nebula-purple) 0%, transparent 70%);
+  top: 10%;
+  left: 10%;
+}
+
+.cloud-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--nebula-pink) 0%, transparent 70%);
+  top: 30%;
+  right: 5%;
+  animation-delay: 0.1s;
+}
+
+.cloud-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--nebula-blue) 0%, transparent 70%);
+  bottom: 10%;
+  left: 30%;
+  animation-delay: 0.2s;
+}
+
+@keyframes nebulaReveal {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Particles */
+.particles {
+  position: absolute;
+  inset: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--star-white);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 80%;
+}
+
+.particle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+.particle:nth-child(2) { top: 40%; left: 70%; animation-delay: 0.1s; }
+.particle:nth-child(3) { top: 60%; left: 30%; animation-delay: 0.2s; }
+.particle:nth-child(4) { top: 30%; left: 80%; animation-delay: 0.15s; }
+.particle:nth-child(5) { top: 70%; left: 60%; animation-delay: 0.25s; }
+.particle:nth-child(6) { top: 50%; left: 40%; animation-delay: 0.05s; }
+.particle:nth-child(7) { top: 80%; left: 50%; animation-delay: 0.3s; }
+.particle:nth-child(8) { top: 25%; left: 55%; animation-delay: 0.12s; }
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(calc(50vw - 100%), calc(50vh - 100%)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(50vw - 50%), calc(50vh - 50%)) scale(0.5);
+  }
+}
+
+.nebula .content h2 {
+  color: var(--nebula-pink);
+  text-shadow: 0 0 40px var(--nebula-purple);
+}
+
+/* ============================================
+   Section 3: Protostar
+   ============================================ */
+.protostar {
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, var(--void-black) 100%);
+}
+
+.accretion-disk {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--star-orange) 30deg,
+    var(--star-yellow) 60deg,
+    transparent 90deg,
+    var(--star-orange) 120deg,
+    transparent 150deg,
+    var(--star-yellow) 180deg,
+    transparent 210deg,
+    var(--star-orange) 240deg,
+    transparent 270deg,
+    var(--star-yellow) 300deg,
+    transparent 330deg,
+    var(--star-orange) 360deg
+  );
+  opacity: 0;
+  transform: rotateX(75deg) scale(0.5);
+  filter: blur(2px);
+  animation: diskForm linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 60%;
+}
+
+@keyframes diskForm {
+  0% { opacity: 0; transform: rotateX(75deg) scale(0.5) rotate(0deg); }
+  100% { opacity: 0.8; transform: rotateX(75deg) scale(1.5) rotate(180deg); }
+}
+
+.core-glow {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--star-white) 0%, var(--star-yellow) 30%, var(--star-orange) 60%, transparent 100%);
+  box-shadow: 0 0 60px var(--star-yellow), 0 0 120px var(--star-orange);
+  opacity: 0;
+  animation: coreIgnite linear both;
+  animation-timeline: view();
+  animation-range: entry 30% cover 70%;
+}
+
+@keyframes coreIgnite {
+  0% { opacity: 0; transform: scale(0); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.matter-streams {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.stream {
+  position: absolute;
+  width: 2px;
+  height: 150px;
+  background: linear-gradient(to bottom, var(--star-orange), transparent);
+  top: 50%;
+  left: 50%;
+  transform-origin: top center;
+  opacity: 0;
+  animation: streamFlow linear both;
+  animation-timeline: view();
+  animation-range: entry 40% cover 80%;
+}
+
+.stream:nth-child(1) { transform: rotate(0deg) translateY(-50px); }
+.stream:nth-child(2) { transform: rotate(90deg) translateY(-50px); }
+.stream:nth-child(3) { transform: rotate(180deg) translateY(-50px); }
+.stream:nth-child(4) { transform: rotate(270deg) translateY(-50px); }
+
+@keyframes streamFlow {
+  0% { opacity: 0; height: 0; }
+  100% { opacity: 0.7; height: 150px; }
+}
+
+.protostar .content h2 {
+  color: var(--star-orange);
+  text-shadow: 0 0 30px var(--star-yellow);
+}
+
+/* ============================================
+   Section 4: Main Sequence Star
+   ============================================ */
+.main-sequence {
+  background: radial-gradient(ellipse at center, #1a1510 0%, var(--void-black) 100%);
+}
+
+.star-body {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+}
+
+.photosphere {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--star-white) 0%, var(--star-yellow) 50%, var(--star-orange) 100%);
+  box-shadow:
+    0 0 60px var(--star-yellow),
+    0 0 120px var(--star-orange),
+    inset 0 0 30px rgba(255,255,255,0.5);
+  transform: scale(0);
+  animation: starShine linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+@keyframes starShine {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.corona {
+  position: absolute;
+  inset: -50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 40%, rgba(255, 212, 59, 0.3) 60%, transparent 80%);
+  animation: coronaPulse 4s ease-in-out infinite;
+}
+
+@keyframes coronaPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.solar-flare {
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  background: linear-gradient(90deg, var(--star-yellow), transparent);
+  border-radius: 50%;
+  filter: blur(3px);
+  opacity: 0;
+  animation: flareErupt 3s ease-in-out infinite;
+}
+
+.flare-1 {
+  top: 30%;
+  right: -20px;
+  transform: rotate(-20deg);
+}
+
+.flare-2 {
+  bottom: 20%;
+  left: -20px;
+  transform: rotate(160deg);
+  animation-delay: 1.5s;
+}
+
+@keyframes flareErupt {
+  0%, 100% { opacity: 0; transform: scaleX(0.5); }
+  50% { opacity: 0.8; transform: scaleX(1.5); }
+}
+
+/* Orbiting Planets */
+.orbiting-planets {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: orbitAppear linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 60%;
+}
+
+.orbit-1 { width: 300px; height: 300px; }
+.orbit-2 { width: 400px; height: 400px; }
+.orbit-3 { width: 520px; height: 520px; }
+
+@keyframes orbitAppear {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  animation: orbitSpin 20s linear infinite;
+}
+
+.orbit-1 .planet {
+  width: 12px;
+  height: 12px;
+  background: #8B4513;
+  top: -6px;
+  left: 50%;
+  box-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+}
+
+.orbit-2 .planet {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #4169E1, #1E90FF);
+  top: 50%;
+  right: -10px;
+  box-shadow: 0 0 15px rgba(65, 105, 225, 0.5);
+  animation-duration: 30s;
+}
+
+.orbit-3 .planet {
+  width: 16px;
+  height: 16px;
+  background: #CD853F;
+  bottom: -8px;
+  left: 50%;
+  box-shadow: 0 0 12px rgba(205, 133, 63, 0.5);
+  animation-duration: 45s;
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg) translateX(50%) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(50%) rotate(-360deg); }
+}
+
+.main-sequence .content h2 {
+  color: var(--star-yellow);
+  text-shadow: 0 0 40px var(--star-orange);
+}
+
+/* ============================================
+   Section 5: Red Giant
+   ============================================ */
+.red-giant {
+  background: radial-gradient(ellipse at center, #2a1a1a 0%, var(--void-black) 100%);
+}
+
+.giant-body {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+
+.outer-envelope {
+  position: absolute;
+  inset: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 53, 69, 0.6) 0%, rgba(220, 53, 69, 0.2) 50%, transparent 70%);
+  transform: scale(0);
+  animation: envelopeExpand linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50%;
+}
+
+@keyframes envelopeExpand {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 1; }
+}
+
+.inner-core {
+  position: absolute;
+  inset: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--star-white) 0%, var(--star-yellow) 30%, var(--star-orange) 60%, var(--star-red) 100%);
+  box-shadow:
+    0 0 80px var(--star-red),
+    0 0 160px rgba(220, 53, 69, 0.5);
+  animation: coreContract linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 60%;
+}
+
+@keyframes coreContract {
+  0% { transform: scale(1.5); filter: brightness(0.5); }
+  100% { transform: scale(1); filter: brightness(1.5); }
+}
+
+.pulsation {
+  position: absolute;
+  inset: -150px;
+  border-radius: 50%;
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  animation: pulsate 3s ease-in-out infinite;
+}
+
+@keyframes pulsate {
+  0%, 100% { transform: scale(0.8); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+.ash-ring {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 30px solid transparent;
+  border-top-color: rgba(139, 69, 19, 0.3);
+  border-right-color: rgba(139, 69, 19, 0.2);
+  opacity: 0;
+  animation: ashAppear linear both;
+  animation-timeline: view();
+  animation-range: entry 30% cover 70%;
+}
+
+@keyframes ashAppear {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(0deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) rotate(45deg); }
+}
+
+.red-giant .content h2 {
+  color: var(--star-red);
+  text-shadow: 0 0 40px var(--star-orange);
+}
+
+/* ============================================
+   Section 6: Supernova
+   ============================================ */
+.supernova {
+  background: var(--void-black);
+}
+
+.explosion {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shockwave {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid var(--supernova-gold);
+  opacity: 0;
+  animation: shockwaveExpand linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 80%;
+}
+
+.shockwave.delay-1 {
+  animation-range: entry 30% cover 85%;
+  border-color: var(--star-orange);
+}
+
+.shockwave.delay-2 {
+  animation-range: entry 40% cover 90%;
+  border-color: var(--star-red);
+}
+
+@keyframes shockwaveExpand {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+    border-width: 20px;
+  }
+  100% {
+    transform: scale(20);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+.core-collapse {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--star-white) 0%, var(--supernova-gold) 30%, var(--star-orange) 60%, transparent 100%);
+  box-shadow:
+    0 0 100px var(--supernova-gold),
+    0 0 200px var(--star-orange),
+    0 0 300px var(--star-red);
+  animation: coreFlash linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 60%;
+}
+
+@keyframes coreFlash {
+  0% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(3); filter: brightness(5); }
+  100% { transform: scale(0.1); filter: brightness(0.5); }
+}
+
+.debris {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.fragment {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--supernova-gold);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  animation: fragmentFly linear both;
+  animation-timeline: view();
+  animation-range: entry 25% cover 90%;
+}
+
+.fragment:nth-child(1) { --angle: 0deg; --distance: 40vw; background: gold; }
+.fragment:nth-child(2) { --angle: 30deg; --distance: 35vw; background: silver; }
+.fragment:nth-child(3) { --angle: 60deg; --distance: 45vw; background: #B87333; }
+.fragment:nth-child(4) { --angle: 90deg; --distance: 38vw; background: gold; }
+.fragment:nth-child(5) { --angle: 120deg; --distance: 42vw; background: #E5E4E2; }
+.fragment:nth-child(6) { --angle: 150deg; --distance: 36vw; background: gold; }
+.fragment:nth-child(7) { --angle: 180deg; --distance: 44vw; background: silver; }
+.fragment:nth-child(8) { --angle: 210deg; --distance: 39vw; background: #B87333; }
+.fragment:nth-child(9) { --angle: 240deg; --distance: 41vw; background: gold; }
+.fragment:nth-child(10) { --angle: 270deg; --distance: 37vw; background: #E5E4E2; }
+.fragment:nth-child(11) { --angle: 300deg; --distance: 43vw; background: silver; }
+.fragment:nth-child(12) { --angle: 330deg; --distance: 40vw; background: gold; }
+
+@keyframes fragmentFly {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--distance)));
+  }
+}
+
+.supernova .content {
+  z-index: 20;
+}
+
+.supernova .content h2 {
+  color: var(--supernova-gold);
+  text-shadow: 0 0 60px var(--star-orange);
+}
+
+/* ============================================
+   Section 7: Legacy
+   ============================================ */
+.legacy {
+  background: linear-gradient(180deg, var(--void-black) 0%, #0a1520 50%, var(--void-black) 100%);
+  flex-direction: column;
+}
+
+.remnant-nebula {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.gas-shell {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: shellExpand linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 60%;
+}
+
+.shell-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(ellipse, transparent 30%, var(--remnant-teal) 50%, transparent 70%);
+  filter: blur(20px);
+}
+
+.shell-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse, transparent 40%, var(--remnant-blue) 55%, transparent 70%);
+  filter: blur(30px);
+  animation-range: entry 10% cover 65%;
+}
+
+.shell-3 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(ellipse, transparent 45%, var(--nebula-pink) 58%, transparent 70%);
+  filter: blur(40px);
+  animation-range: entry 20% cover 70%;
+}
+
+@keyframes shellExpand {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+}
+
+.neutron-star {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--star-white);
+  box-shadow:
+    0 0 20px var(--star-white),
+    0 0 40px var(--remnant-teal),
+    0 0 60px var(--remnant-blue);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: neutronPulse 0.5s ease-in-out infinite, neutronAppear linear both;
+  animation-timeline: view();
+  animation-range: entry 30% cover 50%;
+}
+
+@keyframes neutronPulse {
+  0%, 100% { box-shadow: 0 0 20px var(--star-white), 0 0 40px var(--remnant-teal); }
+  50% { box-shadow: 0 0 30px var(--star-white), 0 0 60px var(--remnant-teal), 0 0 80px var(--remnant-blue); }
+}
+
+@keyframes neutronAppear {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.new-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.baby-star {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--star-white), var(--star-yellow));
+  box-shadow: 0 0 20px var(--star-yellow);
+  opacity: 0;
+  animation: babyStarBirth linear both;
+  animation-timeline: view();
+  animation-range: entry 50% cover 90%;
+}
+
+.baby-star:nth-child(1) { top: 20%; left: 25%; }
+.baby-star:nth-child(2) { top: 70%; right: 20%; animation-range: entry 55% cover 92%; }
+.baby-star:nth-child(3) { bottom: 25%; left: 35%; animation-range: entry 60% cover 95%; }
+
+@keyframes babyStarBirth {
+  0% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.5); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+.legacy .content h2 {
+  color: var(--remnant-teal);
+  text-shadow: 0 0 40px var(--remnant-blue);
+}
+
+/* Credits */
+.credits {
+  position: absolute;
+  bottom: 2rem;
+  text-align: center;
+  opacity: 0;
+  animation: creditsAppear linear both;
+  animation-timeline: view();
+  animation-range: entry 70% cover 100%;
+}
+
+@keyframes creditsAppear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 0.6; transform: translateY(0); }
+}
+
+.credits p {
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.credits .tech {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .void .title {
+    letter-spacing: 0.15em;
+  }
+
+  .nebula-cloud {
+    filter: blur(40px);
+  }
+
+  .cloud-1 { width: 250px; height: 250px; }
+  .cloud-2 { width: 300px; height: 300px; }
+  .cloud-3 { width: 200px; height: 200px; }
+
+  .accretion-disk { width: 200px; height: 200px; }
+  .core-glow { width: 50px; height: 50px; }
+
+  .photosphere { width: 120px; height: 120px; }
+  .orbit-1 { width: 200px; height: 200px; }
+  .orbit-2 { width: 280px; height: 280px; }
+  .orbit-3 { width: 360px; height: 360px; }
+
+  .giant-body { width: 200px; height: 200px; }
+  .outer-envelope { inset: -60px; }
+
+  .shell-1 { width: 280px; height: 280px; }
+  .shell-2 { width: 350px; height: 350px; }
+  .shell-3 { width: 420px; height: 420px; }
+}
+
+@media (max-width: 480px) {
+  .content h2 {
+    font-size: 1.75rem;
+  }
+
+  .content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .orbit-3 {
+    display: none;
+  }
+
+  .ash-ring {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-container {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
