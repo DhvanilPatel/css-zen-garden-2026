@@ -1,0 +1,520 @@
+/* Geometric Sunrise - CSS Zen Garden Piece
+   Showcases: Linear/Radial/Conic gradients, clip-path, animations
+   Color palette: Deep purple → magenta → orange → gold → yellow */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Sunrise color palette */
+    --deep-purple: #1a0a2e;
+    --purple: #3d1a5c;
+    --magenta: #7b2d5b;
+    --rose: #b8405e;
+    --coral: #d9534f;
+    --orange: #ee7752;
+    --amber: #e89035;
+    --gold: #f5af19;
+    --yellow: #fceabb;
+    --pale-yellow: #fff9e6;
+
+    /* Mountain colors */
+    --mountain-far: #2d1b4e;
+    --mountain-mid: #4a2c6a;
+    --mountain-near: #1a0a2e;
+
+    /* Hill colors */
+    --hill-back: #0d0515;
+    --hill-front: #060208;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.8;
+    color: var(--pale-yellow);
+}
+
+/* Main scene container */
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+/* Sky gradient - linear gradient from purple to yellow */
+.sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--deep-purple) 0%,
+        var(--purple) 15%,
+        var(--magenta) 30%,
+        var(--rose) 45%,
+        var(--coral) 55%,
+        var(--orange) 65%,
+        var(--amber) 75%,
+        var(--gold) 85%,
+        var(--yellow) 95%,
+        var(--pale-yellow) 100%
+    );
+}
+
+/* Sun container positioning */
+.sun-container {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(50vw, 400px);
+    height: min(50vw, 400px);
+}
+
+/* Conic gradient sun rays */
+.sun-rays {
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(255, 200, 100, 0.4) 5deg,
+        transparent 10deg,
+        transparent 15deg,
+        rgba(255, 180, 80, 0.3) 20deg,
+        transparent 25deg,
+        transparent 30deg,
+        rgba(255, 160, 60, 0.35) 35deg,
+        transparent 40deg,
+        transparent 45deg,
+        rgba(255, 200, 100, 0.4) 50deg,
+        transparent 55deg,
+        transparent 60deg,
+        rgba(255, 180, 80, 0.3) 65deg,
+        transparent 70deg,
+        transparent 75deg,
+        rgba(255, 160, 60, 0.35) 80deg,
+        transparent 85deg,
+        transparent 90deg,
+        rgba(255, 200, 100, 0.4) 95deg,
+        transparent 100deg,
+        transparent 105deg,
+        rgba(255, 180, 80, 0.3) 110deg,
+        transparent 115deg,
+        transparent 120deg,
+        rgba(255, 160, 60, 0.35) 125deg,
+        transparent 130deg,
+        transparent 135deg,
+        rgba(255, 200, 100, 0.4) 140deg,
+        transparent 145deg,
+        transparent 150deg,
+        rgba(255, 180, 80, 0.3) 155deg,
+        transparent 160deg,
+        transparent 165deg,
+        rgba(255, 160, 60, 0.35) 170deg,
+        transparent 175deg,
+        transparent 180deg,
+        rgba(255, 200, 100, 0.4) 185deg,
+        transparent 190deg,
+        transparent 195deg,
+        rgba(255, 180, 80, 0.3) 200deg,
+        transparent 205deg,
+        transparent 210deg,
+        rgba(255, 160, 60, 0.35) 215deg,
+        transparent 220deg,
+        transparent 225deg,
+        rgba(255, 200, 100, 0.4) 230deg,
+        transparent 235deg,
+        transparent 240deg,
+        rgba(255, 180, 80, 0.3) 245deg,
+        transparent 250deg,
+        transparent 255deg,
+        rgba(255, 160, 60, 0.35) 260deg,
+        transparent 265deg,
+        transparent 270deg,
+        rgba(255, 200, 100, 0.4) 275deg,
+        transparent 280deg,
+        transparent 285deg,
+        rgba(255, 180, 80, 0.3) 290deg,
+        transparent 295deg,
+        transparent 300deg,
+        rgba(255, 160, 60, 0.35) 305deg,
+        transparent 310deg,
+        transparent 315deg,
+        rgba(255, 200, 100, 0.4) 320deg,
+        transparent 325deg,
+        transparent 330deg,
+        rgba(255, 180, 80, 0.3) 335deg,
+        transparent 340deg,
+        transparent 345deg,
+        rgba(255, 160, 60, 0.35) 350deg,
+        transparent 355deg,
+        transparent 360deg
+    );
+    border-radius: 50%;
+    animation: rotate-rays 120s linear infinite;
+}
+
+@keyframes rotate-rays {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Sun core - radial gradient */
+.sun-core {
+    position: absolute;
+    inset: 25%;
+    background: radial-gradient(
+        circle at 40% 40%,
+        var(--pale-yellow) 0%,
+        var(--yellow) 30%,
+        var(--gold) 60%,
+        var(--amber) 80%,
+        var(--orange) 100%
+    );
+    border-radius: 50%;
+    box-shadow:
+        0 0 60px 20px rgba(245, 175, 25, 0.6),
+        0 0 100px 40px rgba(238, 119, 82, 0.4),
+        0 0 140px 60px rgba(184, 64, 94, 0.2);
+}
+
+/* Sun glow pulse animation */
+.sun-glow {
+    position: absolute;
+    inset: 20%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 200, 0.3) 0%,
+        transparent 70%
+    );
+    border-radius: 50%;
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* Mountains layer */
+.mountains {
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    height: 40%;
+}
+
+.mountain {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Geometric mountains using clip-path */
+.mountain-1 {
+    background: linear-gradient(
+        to bottom,
+        var(--mountain-far) 0%,
+        #3a2060 100%
+    );
+    clip-path: polygon(
+        0% 100%,
+        15% 45%,
+        25% 60%,
+        35% 30%,
+        45% 55%,
+        50% 40%,
+        60% 65%,
+        70% 35%,
+        80% 50%,
+        90% 25%,
+        100% 55%,
+        100% 100%
+    );
+    opacity: 0.6;
+}
+
+.mountain-2 {
+    background: linear-gradient(
+        to bottom,
+        var(--mountain-mid) 0%,
+        #5a3c7a 100%
+    );
+    clip-path: polygon(
+        0% 100%,
+        5% 70%,
+        20% 40%,
+        30% 55%,
+        40% 35%,
+        55% 50%,
+        65% 30%,
+        75% 45%,
+        85% 35%,
+        95% 50%,
+        100% 60%,
+        100% 100%
+    );
+    opacity: 0.75;
+}
+
+.mountain-3 {
+    background: linear-gradient(
+        to bottom,
+        #2a1545 0%,
+        var(--mountain-near) 100%
+    );
+    clip-path: polygon(
+        0% 100%,
+        0% 65%,
+        10% 50%,
+        25% 65%,
+        35% 45%,
+        45% 60%,
+        60% 40%,
+        70% 55%,
+        85% 50%,
+        100% 70%,
+        100% 100%
+    );
+    opacity: 0.85;
+}
+
+.mountain-4 {
+    background: linear-gradient(
+        135deg,
+        #1f0d35 0%,
+        #0f0518 100%
+    );
+    clip-path: polygon(
+        0% 100%,
+        0% 75%,
+        15% 60%,
+        30% 70%,
+        45% 55%,
+        55% 65%,
+        70% 50%,
+        80% 60%,
+        95% 55%,
+        100% 65%,
+        100% 100%
+    );
+}
+
+/* Rolling hills in foreground */
+.hills {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20%;
+}
+
+.hill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hill-1 {
+    background: var(--hill-back);
+    clip-path: ellipse(80% 100% at 30% 100%);
+}
+
+.hill-2 {
+    background: var(--hill-front);
+    clip-path: ellipse(70% 80% at 75% 100%);
+}
+
+/* Content overlay */
+.content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+    margin-bottom: 2rem;
+    animation: fade-in 2s ease-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(
+        90deg,
+        var(--pale-yellow),
+        var(--gold),
+        var(--pale-yellow)
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 8s linear infinite;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.tagline {
+    font-size: clamp(0.9rem, 3vw, 1.3rem);
+    font-style: italic;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+}
+
+.poem {
+    max-width: 600px;
+    animation: fade-in 2s ease-out 0.5s both;
+}
+
+.stanza {
+    margin-bottom: 1.5rem;
+}
+
+.stanza p {
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    line-height: 2;
+    letter-spacing: 0.02em;
+}
+
+.stanza:nth-child(2) {
+    animation: fade-in 2s ease-out 1s both;
+}
+
+.stanza:nth-child(3) {
+    animation: fade-in 2s ease-out 1.5s both;
+}
+
+.footer {
+    margin-top: 2rem;
+    animation: fade-in 2s ease-out 2s both;
+}
+
+.attribution {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    font-style: italic;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content {
+        padding: 1.5rem;
+        justify-content: flex-start;
+        padding-top: 10vh;
+    }
+
+    .sun-container {
+        bottom: 30%;
+    }
+
+    .mountains {
+        bottom: 20%;
+        height: 35%;
+    }
+
+    .hills {
+        height: 25%;
+    }
+
+    .stanza {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 1rem;
+        padding-top: 5vh;
+    }
+
+    h1 {
+        letter-spacing: 0.1em;
+    }
+
+    .stanza p {
+        line-height: 1.7;
+    }
+}
+
+/* Prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .sun-rays {
+        animation: none;
+    }
+
+    .sun-glow {
+        animation: none;
+    }
+
+    h1 {
+        animation: none;
+        background-position: 0 center;
+    }
+
+    .header,
+    .poem,
+    .stanza,
+    .footer {
+        animation: none;
+    }
+}
+
+/* Dark mode already looks great, but add subtle adjustments */
+@media (prefers-color-scheme: dark) {
+    .content {
+        text-shadow:
+            0 2px 15px rgba(0, 0, 0, 0.7),
+            0 0 50px rgba(0, 0, 0, 0.5);
+    }
+}
